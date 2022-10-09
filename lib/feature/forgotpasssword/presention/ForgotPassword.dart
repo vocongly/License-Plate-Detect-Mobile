@@ -1,9 +1,16 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:license_plate_detect/core/models/checkAndDetail.dart';
 import 'package:license_plate_detect/core/theme/app_color.dart';
 import 'package:license_plate_detect/feature/login/presention/LoginPage.dart';
 import 'package:license_plate_detect/feature/otp/presention/OTPPage.dart';
+import 'package:license_plate_detect/services/auth/auth.dart';
+import 'package:license_plate_detect/ultis/checkInternet/checkInternet.dart';
+import 'package:license_plate_detect/ultis/toast/toast.dart';
 
 import '../../../core/component/app_text_field.dart';
+import '../../otpresetpassword/presention/OTPResetPassword.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({Key? key}) : super(key: key);
@@ -13,6 +20,12 @@ class ForgotPasswordPage extends StatefulWidget {
 }
 
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
+
+  TextEditingController emailController = TextEditingController();
+
+  var isDeviceConnected = false;
+  bool isAlertSet = false;
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -48,34 +61,55 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               image: const AssetImage("assets/img_forgot_password.png"),
             ),
             Text(
-              'Forgot\nPassword',
+              'Quên\nMật khẩu',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             Text(
-              "Don't worry! Please enter the email that associated with your Account ",
+              "Đừng lo lắng! Vui lòng nhập email liên quan đến tài khoản của bạn",
               style: Theme.of(context).textTheme.button?.copyWith(color: Colors.grey),
             ),
             const SizedBox(),
-            const AppTextFields(
+            AppTextFields(
+              controller: emailController,
               prefix: Icon(Icons.alternate_email_rounded),
-              hint: "Email Address",
+              hint: "Địa chỉ email",
               textInputAction: TextInputAction.done,
             ),
             SizedBox(
               width: size.width,
               height: 64,
               child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                            return OTPPage();
-                          }));
+                onPressed: () async {
+                  bool checkConnection = await checkInternet.getConnectivity(
+                      isDeviceConnected, isAlertSet);
+                  if (!checkConnection) {
+                    checkInternet.showDialogBox(
+                        context, isDeviceConnected, isAlertSet);
+                    setState(() {
+                      isAlertSet = true;
+                    });
+                  }else if(emailController.text == ''){
+                    Toast.presentWarningToast(context, 'Không được để trống email!');
+                  }else{
+                    CheckAndDetail cks = await Authenticate.forgotpassword(emailController.text);
+                    if(cks.check == true){
+                      Timer(const Duration(milliseconds: 100), () {
+                        Toast.presentSuccessToast(context,cks.detail);
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return OTPResetPasswordPage(email: emailController.text,);
+                        }));
+                      });
+                    }else{
+                      Toast.presentErrorToast(context,cks.detail);
+                    }
+                  }
                 },
                 style: ButtonStyle(
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)))),
-                child: const Text('Login'),
+                child: const Text('Xác nhận'),
               ),
             ),
           ],

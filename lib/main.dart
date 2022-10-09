@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:license_plate_detect/feature/login/presention/LoginPage.dart';
+import 'package:license_plate_detect/feature/resetpassword/presention/ResetPasswordPage.dart';
 import '/core/theme/app_theme.dart';
 
 void main() async {

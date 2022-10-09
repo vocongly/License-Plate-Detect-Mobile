@@ -4,7 +4,7 @@ import 'dart:async';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:license_plate_detect/core/models/register.dart';
+import 'package:license_plate_detect/core/models/checkAndDetail.dart';
 import 'package:license_plate_detect/feature/login/presention/LoginPage.dart';
 import 'package:license_plate_detect/ultis/checkInternet/checkInternet.dart';
 import 'package:license_plate_detect/ultis/dialog/alertDialog.dart';
@@ -36,7 +36,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
   var isDeviceConnected = false;
   bool isAlertSet = false;
-
 
   bool checkSpace() {
     bool check = true;
@@ -85,7 +84,7 @@ class _RegisterPageState extends State<RegisterPage> {
               image: const AssetImage("assets/img_register.png"),
             ),
             Text(
-              'Register',
+              'Đăng ký',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             Column(
@@ -103,7 +102,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 AppTextFields(
                   controller: phonenumberController,
                   prefix: Icon(Icons.phone_outlined),
-                  hint: "Phone number",
+                  hint: "Số điện thoại",
                   textInputAction: TextInputAction.done,
                 ),
                 const SizedBox(
@@ -112,7 +111,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 AppTextFields(
                   controller: emailController,
                   prefix: Icon(Icons.alternate_email_rounded),
-                  hint: "Email Address",
+                  hint: "Địa chỉ email",
                   textInputAction: TextInputAction.done,
                 ),
                 const SizedBox(
@@ -131,7 +130,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       icon: Icon(showPassword
                           ? Icons.visibility_outlined
                           : Icons.visibility_off_outlined)),
-                  hint: "Password",
+                  hint: "Mật khẩu",
                   textInputAction: TextInputAction.done,
                 ),
                 const SizedBox(
@@ -150,7 +149,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       icon: Icon(showPasswordConfirm
                           ? Icons.visibility_outlined
                           : Icons.visibility_off_outlined)),
-                  hint: "Password confirm",
+                  hint: "Xác nhận mật khẩu",
                   textInputAction: TextInputAction.done,
                 ),
               ],
@@ -160,14 +159,15 @@ class _RegisterPageState extends State<RegisterPage> {
               height: 64,
               child: ElevatedButton(
                 onPressed: () async {
-                  bool checkConnection = await checkInternet.getConnectivity(isDeviceConnected, isAlertSet);
-                  if(!checkConnection){
-                    checkInternet.showDialogBox(context, isDeviceConnected, isAlertSet);
+                  bool checkConnection = await checkInternet.getConnectivity(
+                      isDeviceConnected, isAlertSet);
+                  if (!checkConnection) {
+                    checkInternet.showDialogBox(
+                        context, isDeviceConnected, isAlertSet);
                     setState(() {
                       isAlertSet = true;
                     });
-                  }
-                  else if (!checkSpace()) {
+                  } else if (!checkSpace()) {
                     Toast.presentWarningToast(
                         context, 'Không được để trống các ô!');
                   } else if (passwordConfirmController.text !=
@@ -176,23 +176,27 @@ class _RegisterPageState extends State<RegisterPage> {
                         context, 'Mật khẩu phải giống nhau!');
                   } else {
                     Loading.loadingtext(context, 'Đang đăng ký tài khoản');
-                    Register reg = await Authenticate.register(
+                    CheckAndDetail reg = await Authenticate.register(
                         emailController.text,
                         usernameController.text,
                         phonenumberController.text,
                         passwordConfirmController.text);
                     if (reg.check == true) {
-                      Toast.presentSuccessToast(context, 'Đăng ký thành công!');
-                      Timer(const Duration(milliseconds: 500), () {
+                      Timer(const Duration(milliseconds: 100), () {
                         Loading.dismisloading(context);
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return LoginPage();
+                          return OTPPage(
+                            email: emailController.text,
+                            username: usernameController.text,
+                            phonenumber: phonenumberController.text,
+                            password: passwordConfirmController.text,
+                          );
                         }));
                       });
                     } else if (reg.check == false) {
                       Loading.dismisloading(context);
-                      Toast.presentErrorToast(context, '${reg.error}');
+                      Toast.presentErrorToast(context, '${reg.detail}');
                     }
                   }
                   // Navigator.push(context,
@@ -204,7 +208,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)))),
-                child: const Text('Register'),
+                child: const Text('Đăng ký tài khoản'),
               ),
             ),
           ],

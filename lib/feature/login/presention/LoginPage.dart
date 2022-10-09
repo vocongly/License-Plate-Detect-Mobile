@@ -78,7 +78,7 @@ class _LoginPageState extends State<LoginPage> {
               image: const AssetImage("assets/Lead_image.png"),
             ),
             Text(
-              'Login',
+              'Đăng nhập',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             Column(
@@ -106,7 +106,7 @@ class _LoginPageState extends State<LoginPage> {
                       icon: Icon(showPassword
                           ? Icons.visibility_outlined
                           : Icons.visibility_off_outlined)),
-                  hint: "Password",
+                  hint: "Mật khẩu",
                   textInputAction: TextInputAction.done,
                 ),
               ],
@@ -119,7 +119,7 @@ class _LoginPageState extends State<LoginPage> {
                     return ForgotPasswordPage();
                   }));
                 },
-                child: Text('Forgot Password?'),
+                child: Text('Quên mật khẩu?'),
               ),
             ),
             SizedBox(
@@ -163,7 +163,7 @@ class _LoginPageState extends State<LoginPage> {
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)))),
-                child: const Text('Login'),
+                child: const Text('Đăng nhập'),
               ),
             ),
             Align(
@@ -171,10 +171,10 @@ class _LoginPageState extends State<LoginPage> {
                 child: RichText(
                     text: TextSpan(children: [
                   TextSpan(
-                      text: "Don't have an Account ?",
+                      text: "Chưa có tài khoản ?",
                       style: Theme.of(context).textTheme.button),
                   TextSpan(
-                      text: " Register here!",
+                      text: " Đăng ký ở đây!",
                       style: Theme.of(context)
                           .textTheme
                           .button

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:license_plate_detect/core/models/checkAndDetail.dart';
 import 'package:license_plate_detect/feature/login/presention/LoginPage.dart';
+import 'package:license_plate_detect/feature/resetpassword/presention/ResetPasswordPage.dart';
 import 'package:license_plate_detect/services/auth/auth.dart';
 import 'package:license_plate_detect/ultis/checkInternet/checkInternet.dart';
 import 'package:license_plate_detect/ultis/toast/toast.dart';
@@ -13,26 +14,19 @@ import '../../../core/theme/app_color.dart';
 import '../../../ultis/loading/loading.dart';
 import '../../register/presention/RegisterPage.dart';
 
-class OTPPage extends StatefulWidget {
-  OTPPage(
-      {Key? key,
-      required this.email,
-      this.username,
-      this.phonenumber,
-      this.password})
-      : super(key: key);
+class OTPResetPasswordPage extends StatefulWidget {
+  OTPResetPasswordPage({
+    Key? key,
+    required this.email,
+  }) : super(key: key);
 
   String email;
 
-  final String? username;
-  final String? phonenumber;
-  final String? password;
-
   @override
-  State<OTPPage> createState() => _OTPPageState();
+  State<OTPResetPasswordPage> createState() => _OTPResetPasswordPage();
 }
 
-class _OTPPageState extends State<OTPPage> {
+class _OTPResetPasswordPage extends State<OTPResetPasswordPage> {
   TextEditingController otpController1 = new TextEditingController();
   TextEditingController otpController2 = new TextEditingController();
   TextEditingController otpController3 = new TextEditingController();
@@ -248,13 +242,9 @@ class _OTPPageState extends State<OTPPage> {
                         setState(
                           () => isAlertSet = true,
                         );
-                      }else{
-                        CheckAndDetail reg = await Authenticate.register(
-                        widget.email,
-                        widget.username!,
-                        widget.phonenumber!,
-                        widget.password!);
-                        if (reg.check == true) {
+                      } else {
+                        CheckAndDetail cks = await Authenticate.forgotpassword(widget.email);
+                        if (cks.check == true) {
                           Toast.presentSuccessToast(context,'Đã gửi lại mã đến ${widget.email}');
                         }else{
                           Toast.presentErrorToast(context,'Có lỗi xảy ra! Vui lòng thử lại');
@@ -283,20 +273,16 @@ class _OTPPageState extends State<OTPPage> {
                         otpController2.text +
                         otpController3.text +
                         otpController4.text;
-                    CheckAndDetail reg = await Authenticate.otp(widget.email, otp);
-                    Loading.loadingtext(context, 'Đang đăng ký tài khoản');
+                    CheckAndDetail reg = await Authenticate.otpResetPassword(widget.email, otp);
                     if (reg.check == true) {
-                      Timer(const Duration(milliseconds: 500), () {
-                        Loading.dismisloading(context);
-                        Toast.presentSuccessToast(
-                            context, 'Tạo tài khoản thành công!');
+                      Timer(const Duration(milliseconds: 100), () {
+                        Toast.presentSuccessToast(context, 'OTP hợp lệ!');
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return LoginPage();
+                          return ResetPasswordPage(token: reg.detail,);
                         }));
                       });
                     } else if (reg.check == false) {
-                      Loading.dismisloading(context);
                       Toast.presentErrorToast(context, reg.detail);
                     }
                   }
