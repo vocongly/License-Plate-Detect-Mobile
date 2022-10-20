@@ -41,6 +41,7 @@ dependencies:
   awesome_snackbar_content: ^0.0.8
   connectivity_plus: ^2.3.9
   internet_connection_checker: ^1.0.0+1
+  image_picker: ^0.8.6
 
 dev_dependencies:
   flutter_test:

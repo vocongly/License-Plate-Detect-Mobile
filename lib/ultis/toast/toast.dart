@@ -7,7 +7,7 @@ class Toast {
       elevation: 0,
       behavior: SnackBarBehavior.floating,
       backgroundColor: Colors.transparent,
-      duration: Duration(seconds: 1),
+      duration: Duration(seconds: 2),
       content: AwesomeSnackbarContent(
         title: 'Lỗi!',
         message: '${message}',
@@ -21,7 +21,7 @@ class Toast {
       elevation: 0,
       behavior: SnackBarBehavior.floating,
       backgroundColor: Colors.transparent,
-      duration: Duration(seconds: 1),
+      duration: Duration(seconds: 2),
       content: AwesomeSnackbarContent(
         title: 'Chú ý!',
         message: '${message}',
@@ -35,7 +35,7 @@ class Toast {
       elevation: 0,
       behavior: SnackBarBehavior.floating,
       backgroundColor: Colors.transparent,
-      duration: Duration(seconds: 1),
+      duration: Duration(seconds: 2),
       content: AwesomeSnackbarContent(
         title: 'Chúc mừng!',
         message: '${message}',

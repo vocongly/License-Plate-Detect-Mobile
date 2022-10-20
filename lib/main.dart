@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:license_plate_detect/feature/login/presention/LoginPage.dart';
+import 'package:license_plate_detect/feature/personalinfomation/presention/EditProfilePage.dart';
 import 'package:license_plate_detect/feature/resetpassword/presention/ResetPasswordPage.dart';
+import 'package:license_plate_detect/pages/HomePage.dart';
 import '/core/theme/app_theme.dart';
 
 void main() async {
@@ -17,6 +19,7 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
+
 
   // This widget is the root of your application.
   @override
