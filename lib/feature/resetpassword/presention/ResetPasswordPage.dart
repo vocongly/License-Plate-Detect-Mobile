@@ -9,7 +9,7 @@ import '../../../core/component/app_text_field.dart';
 import '../../../core/theme/app_color.dart';
 import 'package:license_plate_detect/ultis/checkInternet/checkInternet.dart';
 
-import '../../../ultis/toast/toast.dart';
+import '../../../ultis/toast/customtoast.dart';
 
 
 class ResetPasswordPage extends StatefulWidget {
@@ -122,23 +122,23 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                       () => isAlertSet = true,
                     );
                   } else if (newpassword.text == '' || confirmnewpassword.text == '') {
-                    Toast.presentWarningToast(
+                    CustomToast.presentWarningToast(
                         context, 'Không được để trống các ô!');
                   }else if(newpassword.text != confirmnewpassword.text){
-                    Toast.presentWarningToast(
+                    CustomToast.presentWarningToast(
                         context, 'Mật khẩu phải giống nhau!');
                   }else{
                     CheckAndDetail cks = await Authenticate.resetPassword(widget.token,newpassword.text);
                     if(cks.check == true){
                       Timer(const Duration(milliseconds: 100), () {
-                        Toast.presentSuccessToast(context, cks.detail);
+                        CustomToast.presentSuccessToast(context, cks.detail);
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
                           return const LoginPage();
                         }));
                       });
                     }else{
-                      Toast.presentErrorToast(context, cks.detail);
+                      CustomToast.presentErrorToast(context, cks.detail);
                     }
                   }
                 },

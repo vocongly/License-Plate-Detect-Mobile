@@ -6,7 +6,8 @@ import 'package:license_plate_detect/core/component/build_button.dart';
 import 'package:license_plate_detect/feature/personalinfomation/presention/EditProfilePage.dart';
 import 'package:license_plate_detect/feature/personalinfomation/widget/profile_widget.dart';
 import 'package:license_plate_detect/feature/settings/presention/SettingsPage.dart';
-import 'package:license_plate_detect/pages/HomePage.dart';
+import 'package:license_plate_detect/feature/home/presention/HomePage.dart';
+import 'package:license_plate_detect/ultis/checkInternet/checkInternet.dart';
 
 import '../../../core/models/User.dart';
 import '../../../core/theme/app_color.dart';
@@ -42,10 +43,29 @@ class _PersonalInfomationPageState extends State<PersonalInfomationPage> {
     });
   }
 
+  var isDeviceConnected = false;
+  bool isAlertSet = false;
+  
+  void checkConnection()async {
+    bool checkConnection = await checkInternet.getConnectivity(isDeviceConnected, isAlertSet);
+    if (!checkConnection) {
+      checkInternet.showDialogBox(context, isDeviceConnected, isAlertSet);
+      setState(
+        () => isAlertSet = true,
+      );
+    }
+  }
+
   @override
   void initState() {
     // TODO: implement initState
+    checkConnection();
     userLocal = LocalStorage.getUser();
+    print('username : '+userLocal.username!);
+    print('email : '+userLocal.email!);
+    print('firstname : '+userLocal.firstName!);
+    print('lastname : '+userLocal.lastName!);
+    print('phonenumber : '+userLocal.phoneNumber!);
     super.initState();
   }
 
@@ -76,20 +96,17 @@ class _PersonalInfomationPageState extends State<PersonalInfomationPage> {
       ),
       body: SafeArea(
         child: Column(children: [
-          SizedBox(
-            height: 24,
-          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 24),
+                padding: const EdgeInsets.only(left: 12, top: 12),
                 child: Text(
-                  'My Profile',
+                  'Thông tin cá nhân',
                   style: Theme.of(context)
                       .textTheme
                       .headlineMedium!
-                      .copyWith(color: Colors.white),
+                      .copyWith(color: Colors.white,fontSize: 20),
                 ),
               ),
             ],

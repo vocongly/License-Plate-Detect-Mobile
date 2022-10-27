@@ -14,8 +14,8 @@ import 'package:license_plate_detect/ultis/checkInternet/checkInternet.dart';
 
 import '../../../core/models/User.dart';
 import '../../../core/theme/app_color.dart';
-import '../../../ultis/loading/loading.dart';
-import '../../../ultis/toast/toast.dart';
+import '../../../ultis/loading/customloading.dart';
+import '../../../ultis/toast/customtoast.dart';
 import '../widget/textfield_widget.dart';
 
 class EditProfilePage extends StatefulWidget {
@@ -26,10 +26,9 @@ class EditProfilePage extends StatefulWidget {
 }
 
 File? image;
+User user = new User();
 
 class _EditProfilePageState extends State<EditProfilePage> {
-  User user = LocalStorage.getUser();
-
   var isDeviceConnected = false;
   bool isAlertSet = false;
 
@@ -51,6 +50,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   void initState() {
     // TODO: implement initState
     //print(user.email);
+    user = LocalStorage.getUser();
     super.initState();
   }
 
@@ -61,7 +61,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return PersonalInfomationPage();
+            }));
           },
           icon: Icon(
             Icons.arrow_back_ios_new_rounded,
@@ -92,7 +94,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               label: 'Tên',
               text: user.firstName!,
               onChanged: (value) {
-                user.firstName = value;
+                if (value != null) user.firstName = value;
               }),
           SizedBox(
             height: 24,
@@ -101,7 +103,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               label: 'Họ',
               text: user.lastName!,
               onChanged: (value) {
-                user.lastName = value;
+                if (value != null) user.lastName = value;
               }),
           SizedBox(
             height: 24,
@@ -110,7 +112,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               label: 'Số điện thoại',
               text: user.phoneNumber!,
               onChanged: (value) {
-                user.phoneNumber = value;
+                if (value != null) user.phoneNumber = value;
               }),
           SizedBox(
             height: 24,
@@ -119,8 +121,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
             child: ButtonWidget(
                 text: 'Cập nhật thông tin',
                 onClicked: () async {
-
-                  bool checkConnection = await checkInternet.getConnectivity(isDeviceConnected, isAlertSet);
+                  print(user.firstName);
+                  print(user.lastName);
+                  print(user.phoneNumber);
+                  bool checkConnection = await checkInternet.getConnectivity(
+                      isDeviceConnected, isAlertSet);
                   if (!checkConnection) {
                     checkInternet.showDialogBox(
                         context, isDeviceConnected, isAlertSet);
@@ -130,20 +135,20 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   } else {
                     CheckAndDetail cks = await Authenticate.updateProfile(
                         user.firstName!, user.lastName!, user.phoneNumber!);
-                    Loading.loadingtext(context, 'Đang cập nhật thông tin');
+                    CustomLoading.loadingtext(context, 'Đang cập nhật thông tin');
                     if (cks.check == true) {
-                      Loading.dismisloading(context);
-                      Toast.presentSuccessToast(context, 'Cập nhật thông tin thành công!');
+                      CustomLoading.dismisloading(context);
+                      CustomToast.presentSuccessToast(
+                          context, 'Cập nhật thông tin thành công!');
+                      //LocalStorage.deleteUser();
+                      LocalStorage.writeUser(user);
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
                         return PersonalInfomationPage();
                       }));
-                      LocalStorage.deleteUser();
-                      LocalStorage.writeUser(user);
                     } else if (cks.check == false) {
-                      Loading.dismisloading(context);
-                      Toast.presentErrorToast(
-                          context, cks.detail);
+                      CustomLoading.dismisloading(context);
+                      CustomToast.presentErrorToast(context, cks.detail);
                     }
                   }
                 }),
@@ -169,7 +174,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     },
                     child: Text(
                       'Trong máy',
-                      style: TextStyle(fontSize: 20),
+                      style: TextStyle(fontSize: 20, color: Colors.black),
                     ),
                   )),
                   Center(
@@ -177,7 +182,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     onPressed: () async {
                       await pickandupdateimage(context, ImageSource.camera);
                     },
-                    child: Text('Máy ảnh', style: TextStyle(fontSize: 20)),
+                    child: Text('Máy ảnh',
+                        style: TextStyle(fontSize: 20, color: Colors.black)),
                   )),
                 ],
               ),
@@ -201,17 +207,20 @@ class _EditProfilePageState extends State<EditProfilePage> {
         CheckAndDetail cks = await Authenticate.updateImage(image!);
         if (cks.check == true) {
           Navigator.of(context).pop();
-          Toast.presentSuccessToast(context, 'Cập nhật thành công');
+          CustomToast.presentSuccessToast(context, 'Cập nhật thành công');
           setState(() {
             user.avatar = cks.detail;
+            LocalStorage.deleteUser();
+            LocalStorage.writeUser(user);
+            print(user.avatar);
           });
         } else {
-          Toast.presentErrorToast(context, '${cks.detail}');
+          CustomToast.presentErrorToast(context, '${cks.detail}');
         }
       }
     } else {
       Navigator.of(context).pop();
-      Toast.presentWarningToast(context, 'Bạn chưa chọn hình');
+      CustomToast.presentWarningToast(context, 'Bạn chưa chọn hình');
     }
   }
 }

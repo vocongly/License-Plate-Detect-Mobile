@@ -1,7 +1,7 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 
-class Toast {
+class CustomToast {
   static presentErrorToast(BuildContext context, String? message) {
     var snackBar = SnackBar(
       elevation: 0,

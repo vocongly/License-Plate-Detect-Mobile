@@ -7,10 +7,10 @@ import 'package:license_plate_detect/core/models/checkAndDetail.dart';
 import 'package:license_plate_detect/feature/login/presention/LoginPage.dart';
 import 'package:license_plate_detect/services/auth/auth.dart';
 import 'package:license_plate_detect/ultis/checkInternet/checkInternet.dart';
-import 'package:license_plate_detect/ultis/toast/toast.dart';
+import 'package:license_plate_detect/ultis/toast/customtoast.dart';
 
 import '../../../core/theme/app_color.dart';
-import '../../../ultis/loading/loading.dart';
+import '../../../ultis/loading/customloading.dart';
 import '../../register/presention/RegisterPage.dart';
 
 class OTPPage extends StatefulWidget {
@@ -255,9 +255,9 @@ class _OTPPageState extends State<OTPPage> {
                         widget.phonenumber!,
                         widget.password!);
                         if (reg.check == true) {
-                          Toast.presentSuccessToast(context,'Đã gửi lại mã đến ${widget.email}');
+                          CustomToast.presentSuccessToast(context,'Đã gửi lại mã đến ${widget.email}');
                         }else{
-                          Toast.presentErrorToast(context,'Có lỗi xảy ra! Vui lòng thử lại');
+                          CustomToast.presentErrorToast(context,'Có lỗi xảy ra! Vui lòng thử lại');
                         }
                       }
                     }),
@@ -276,7 +276,7 @@ class _OTPPageState extends State<OTPPage> {
                       () => isAlertSet = true,
                     );
                   } else if (!checkSpace()) {
-                    Toast.presentWarningToast(
+                    CustomToast.presentWarningToast(
                         context, 'Không được để trống các ô!');
                   } else {
                     String otp = otpController1.text +
@@ -284,11 +284,11 @@ class _OTPPageState extends State<OTPPage> {
                         otpController3.text +
                         otpController4.text;
                     CheckAndDetail reg = await Authenticate.otp(widget.email, otp);
-                    Loading.loadingtext(context, 'Đang đăng ký tài khoản');
+                    CustomLoading.loadingtext(context, 'Đang đăng ký tài khoản');
                     if (reg.check == true) {
                       Timer(const Duration(milliseconds: 500), () {
-                        Loading.dismisloading(context);
-                        Toast.presentSuccessToast(
+                        CustomLoading.dismisloading(context);
+                        CustomToast.presentSuccessToast(
                             context, 'Tạo tài khoản thành công!');
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
@@ -296,8 +296,8 @@ class _OTPPageState extends State<OTPPage> {
                         }));
                       });
                     } else if (reg.check == false) {
-                      Loading.dismisloading(context);
-                      Toast.presentErrorToast(context, reg.detail);
+                      CustomLoading.dismisloading(context);
+                      CustomToast.presentErrorToast(context, reg.detail);
                     }
                   }
 

@@ -2,26 +2,20 @@
 
 import 'dart:async';
 
-import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:license_plate_detect/core/component/app_text_field.dart';
 import 'package:license_plate_detect/core/models/Token.dart';
 import 'package:license_plate_detect/core/theme/app_color.dart';
 import 'package:license_plate_detect/feature/forgotpasssword/presention/ForgotPassword.dart';
 import 'package:license_plate_detect/feature/register/presention/RegisterPage.dart';
-import 'package:license_plate_detect/pages/HomePage.dart';
+import 'package:license_plate_detect/feature/home/presention/HomePage.dart';
 import 'package:license_plate_detect/services/auth/auth.dart';
 import 'package:license_plate_detect/services/localstorage/localStorage.dart';
 import 'package:license_plate_detect/ultis/checkInternet/checkInternet.dart';
-import 'package:license_plate_detect/ultis/dialog/alertDialog.dart';
-import 'package:license_plate_detect/ultis/loading/loading.dart';
-import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
-import 'package:license_plate_detect/ultis/toast/toast.dart';
+import 'package:license_plate_detect/ultis/loading/customloading.dart';
+import 'package:license_plate_detect/ultis/toast/customtoast.dart';
 
-import '../../../services/api/app_api.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -49,6 +43,7 @@ class _LoginPageState extends State<LoginPage> {
     Token token = LocalStorage.getToken();
     print(token.accessToken);
     print(token.tokenType);
+    print('login');
   }
 
   @override
@@ -134,26 +129,23 @@ class _LoginPageState extends State<LoginPage> {
                       () => isAlertSet = true,
                     );
                   } else {
-                    if (usernameController.text == '' ||
-                        passwordController.text == '') {
+                    if (usernameController.text == '' || passwordController.text == '') {
                       //alertDialog.presentWarningDialog(context, 'Không được để trống\nusername hoặc mật khẩu!');
-                      Toast.presentWarningToast(context,
-                          'Không được để trống\nusername hoặc mật khẩu!');
+                      CustomToast.presentWarningToast(context,'Không được để trống\nusername hoặc mật khẩu!');
                     } else {
-                      Loading.loadingtext(context, 'Đang đăng nhập');
-                      bool check = await Authenticate.login(
-                          usernameController.text, passwordController.text);
+                      CustomLoading.loadingtext(context, 'Đang đăng nhập');
+                      bool check = await Authenticate.login(usernameController.text, passwordController.text);
                       if (check == true) {
                         Timer(const Duration(milliseconds: 500), () {
-                          Loading.dismisloading(context);
+                          CustomLoading.dismisloading(context);
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
                             return MyHomePage();
                           }));
                         });
                       } else if (check == false) {
-                        Loading.dismisloading(context);
-                        Toast.presentErrorToast(context,
+                        CustomLoading.dismisloading(context);
+                        CustomToast.presentErrorToast(context,
                             'Tài khoản hoặc mật khẩu\nkhông chính xác!');
                       }
                     }

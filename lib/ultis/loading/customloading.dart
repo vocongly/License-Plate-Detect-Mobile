@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:license_plate_detect/core/theme/app_color.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-class Loading{
+class CustomLoading{
   static loadingtext(BuildContext context, String? message) {
     showDialog(
       barrierDismissible: false,

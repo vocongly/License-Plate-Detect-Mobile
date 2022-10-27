@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
 
 class AppData{
-  static const String urlAPI = 'http://3.115.4.223';
+  static const String urlAPI = 'http://54.238.251.141/';
 }

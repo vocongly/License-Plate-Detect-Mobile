@@ -11,8 +11,8 @@ class LocalStorage {
 
   //write data
   static void writeToken(String? accessToken, String? tokenType) async {
-    _token.put(1, accessToken);
-    _token.put(2, tokenType);
+    await _token.put(1, accessToken);
+    await _token.put(2, tokenType);
 
     print(accessToken);
     print(tokenType);
@@ -32,21 +32,21 @@ class LocalStorage {
   }
 
   static Future<bool> checkToken() async {
-    bool check = true;
-    if (getToken() != null) {
-      check = false;
+    Token token = getToken();
+    if(token.accessToken != null && token.tokenType != null){
+      return true;
     }
-    return await check;
+    return false;
   }
 
-  static void writeUser(User user) {
-    _user.put(1, user.sId);
-    _user.put(2, user.email);
-    _user.put(3, user.username);
-    _user.put(4, user.phoneNumber);
-    _user.put(5, user.firstName);
-    _user.put(6, user.lastName);
-    _user.put(7, user.avatar);
+  static void writeUser(User user) async {
+    await _user.put(1, user.sId);
+    await _user.put(2, user.email);
+    await _user.put(3, user.username);
+    await _user.put(4, user.phoneNumber);
+    await _user.put(5, user.firstName);
+    await _user.put(6, user.lastName);
+    await _user.put(7, user.avatar);
   }
 
   //read data
@@ -64,6 +64,6 @@ class LocalStorage {
 
   // delete data
   static void deleteUser() async {
-    _user.deleteAll([1, 2, 3, 4, 5, 6, 7]);
+    await _user.deleteAll([1, 2, 3, 4, 5, 6, 7]);
   }
 }

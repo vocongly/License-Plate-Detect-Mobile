@@ -7,7 +7,7 @@ import 'package:license_plate_detect/feature/login/presention/LoginPage.dart';
 import 'package:license_plate_detect/feature/otp/presention/OTPPage.dart';
 import 'package:license_plate_detect/services/auth/auth.dart';
 import 'package:license_plate_detect/ultis/checkInternet/checkInternet.dart';
-import 'package:license_plate_detect/ultis/toast/toast.dart';
+import 'package:license_plate_detect/ultis/toast/customtoast.dart';
 
 import '../../../core/component/app_text_field.dart';
 import '../../otpresetpassword/presention/OTPResetPassword.dart';
@@ -89,19 +89,19 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       isAlertSet = true;
                     });
                   }else if(emailController.text == ''){
-                    Toast.presentWarningToast(context, 'Không được để trống email!');
+                    CustomToast.presentWarningToast(context, 'Không được để trống email!');
                   }else{
                     CheckAndDetail cks = await Authenticate.forgotpassword(emailController.text);
                     if(cks.check == true){
                       Timer(const Duration(milliseconds: 100), () {
-                        Toast.presentSuccessToast(context,cks.detail);
+                        CustomToast.presentSuccessToast(context,cks.detail);
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
                           return OTPResetPasswordPage(email: emailController.text,);
                         }));
                       });
                     }else{
-                      Toast.presentErrorToast(context,cks.detail);
+                      CustomToast.presentErrorToast(context,cks.detail);
                     }
                   }
                 },

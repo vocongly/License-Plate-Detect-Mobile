@@ -11,13 +11,15 @@ import 'package:async/async.dart';
 import 'package:license_plate_detect/core/models/PlateInfo.dart';
 import 'package:license_plate_detect/core/models/Token.dart';
 import 'package:license_plate_detect/core/models/checkAndDetail.dart';
-import 'package:license_plate_detect/pages/HomePage.dart';
+import 'package:license_plate_detect/feature/home/presention/HomePage.dart';
 import 'package:license_plate_detect/services/localstorage/localStorage.dart';
+import 'package:license_plate_detect/ultis/checkInternet/checkInternet.dart';
 
 import '../../core/models/User.dart';
 import '../../core/theme/app_data.dart';
 
 class AppAPI {
+
   static Future<bool> Login(String username, String password) async {
     bool check = true;
     Token token = Token();
@@ -181,11 +183,10 @@ class AppAPI {
   }
 
   static Future<List<PlateInfo>> Upload(File imageFile) async {
-    var postUri = Uri.parse(
-        AppData.urlAPI + '/api/v1/license-plate-app/in_and_out/check_image');
 
-    http.MultipartRequest request =
-        await new http.MultipartRequest("POST", postUri);
+    var postUri = Uri.parse(AppData.urlAPI + '/api/v1/license-plate-app/in_and_out/check_image');
+
+    http.MultipartRequest request = await new http.MultipartRequest("POST", postUri);
 
     http.MultipartFile multipartFile =
         await http.MultipartFile.fromPath('image', imageFile.path);
@@ -200,10 +201,14 @@ class AppAPI {
       var list = json.decode(result) as List<dynamic>;
       plates = list.map((model) => PlateInfo.fromJson(model)).toList();
       return plates;
-    } else {
+    }else if(response.statusCode == 400){
+      List<PlateInfo> plates =[];
+      return plates;
+    } 
+    else {
       // If the server did not return a 201 CREATED response,
       // then throw an exception.
-      throw Exception('Failed to create album.');
+      throw Exception('Không nhận diện được.');
     }
   }
 

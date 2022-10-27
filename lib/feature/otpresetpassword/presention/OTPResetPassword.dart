@@ -8,10 +8,10 @@ import 'package:license_plate_detect/feature/login/presention/LoginPage.dart';
 import 'package:license_plate_detect/feature/resetpassword/presention/ResetPasswordPage.dart';
 import 'package:license_plate_detect/services/auth/auth.dart';
 import 'package:license_plate_detect/ultis/checkInternet/checkInternet.dart';
-import 'package:license_plate_detect/ultis/toast/toast.dart';
+import 'package:license_plate_detect/ultis/toast/customtoast.dart';
 
 import '../../../core/theme/app_color.dart';
-import '../../../ultis/loading/loading.dart';
+import '../../../ultis/loading/customloading.dart';
 import '../../register/presention/RegisterPage.dart';
 
 class OTPResetPasswordPage extends StatefulWidget {
@@ -245,9 +245,9 @@ class _OTPResetPasswordPage extends State<OTPResetPasswordPage> {
                       } else {
                         CheckAndDetail cks = await Authenticate.forgotpassword(widget.email);
                         if (cks.check == true) {
-                          Toast.presentSuccessToast(context,'Đã gửi lại mã đến ${widget.email}');
+                          CustomToast.presentSuccessToast(context,'Đã gửi lại mã đến ${widget.email}');
                         }else{
-                          Toast.presentErrorToast(context,'Có lỗi xảy ra! Vui lòng thử lại');
+                          CustomToast.presentErrorToast(context,'Có lỗi xảy ra! Vui lòng thử lại');
                         }
                       }
                     }),
@@ -266,7 +266,7 @@ class _OTPResetPasswordPage extends State<OTPResetPasswordPage> {
                       () => isAlertSet = true,
                     );
                   } else if (!checkSpace()) {
-                    Toast.presentWarningToast(
+                    CustomToast.presentWarningToast(
                         context, 'Không được để trống các ô!');
                   } else {
                     String otp = otpController1.text +
@@ -276,14 +276,14 @@ class _OTPResetPasswordPage extends State<OTPResetPasswordPage> {
                     CheckAndDetail reg = await Authenticate.otpResetPassword(widget.email, otp);
                     if (reg.check == true) {
                       Timer(const Duration(milliseconds: 100), () {
-                        Toast.presentSuccessToast(context, 'OTP hợp lệ!');
+                        CustomToast.presentSuccessToast(context, 'OTP hợp lệ!');
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
                           return ResetPasswordPage(token: reg.detail,);
                         }));
                       });
                     } else if (reg.check == false) {
-                      Toast.presentErrorToast(context, reg.detail);
+                      CustomToast.presentErrorToast(context, reg.detail);
                     }
                   }
 

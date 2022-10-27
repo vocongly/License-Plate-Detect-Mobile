@@ -1,36 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:license_plate_detect/feature/login/presention/LoginPage.dart';
-import 'package:license_plate_detect/feature/personalinfomation/presention/EditProfilePage.dart';
-import 'package:license_plate_detect/feature/resetpassword/presention/ResetPasswordPage.dart';
-import 'package:license_plate_detect/pages/HomePage.dart';
 import '/core/theme/app_theme.dart';
+import 'feature/login/presention/LoginPage.dart';
+import 'feature/home/presention/HomePage.dart';
+import 'services/auth/auth.dart';
 
 void main() async {
-
   await Hive.initFlutter();
 
   var token = await Hive.openBox('token');
 
   var user = await Hive.openBox('user');
 
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
+  final Authenticate _auth = Authenticate();
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: "License Plate Detect",
-      theme: AppTheme.light,
-      themeMode: ThemeMode.light,
-      home: LoginPage(),
-    );
+        debugShowCheckedModeBanner: false,
+        title: "License Plate Detect",
+        theme: AppTheme.light,
+        themeMode: ThemeMode.light,
+        //home: LoginPage());
+        home: FutureBuilder(
+          future: _auth.checkLogin(),
+          builder: ((context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return CircularProgressIndicator();
+            } else if (snapshot.hasData) {
+              if (snapshot.data == true) {
+                return MyHomePage();
+              } 
+              return LoginPage();
+            }
+            return CircularProgressIndicator();
+          }),
+        ));
   }
 }
-

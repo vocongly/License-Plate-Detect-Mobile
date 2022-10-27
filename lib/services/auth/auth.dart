@@ -4,8 +4,10 @@ import 'dart:ffi';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:license_plate_detect/core/models/Token.dart';
 import 'package:license_plate_detect/core/models/checkAndDetail.dart';
+import 'package:license_plate_detect/feature/home/presention/HomePage.dart';
 import 'package:license_plate_detect/services/api/app_api.dart';
 import 'package:license_plate_detect/services/localstorage/localStorage.dart';
 import 'package:license_plate_detect/ultis/dialog/alertDialog.dart';
@@ -13,16 +15,17 @@ import 'package:license_plate_detect/ultis/dialog/alertDialog.dart';
 import '../../core/models/User.dart';
 
 class Authenticate {
-  static Future<bool> checkLogin() async {
+  Future<bool> checkLogin() async {
     return await LocalStorage.checkToken();
   }
 
   static Future<bool> login(String username, String password) async {
     bool check = true;
-    bool login = await checkLogin();
-    if (login == false) {
-      check = await AppAPI.Login(username, password);
-    }
+    check = await AppAPI.Login(username, password);
+    // bool login = await checkLogin();
+    // if (login == false) {
+      
+    // }
     return check;
   }
 
@@ -60,10 +63,20 @@ class Authenticate {
     return cks;
   }
 
-  static Future<CheckAndDetail> updateProfile(String firstName,String lastName,String phoneNumber) async {
-    CheckAndDetail cks = await AppAPI.updateProfile(firstName, lastName, phoneNumber);
+  static Future<CheckAndDetail> updateProfile(
+      String firstName, String lastName, String phoneNumber) async {
+    CheckAndDetail cks =
+        await AppAPI.updateProfile(firstName, lastName, phoneNumber);
     return cks;
   }
+
+  // static Future<bool> canLoad() async {
+  //   if (await checkLogin() == true) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
 
   static Future<void> logout() async {
     LocalStorage.deleteToken();

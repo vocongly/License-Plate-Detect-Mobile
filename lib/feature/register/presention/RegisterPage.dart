@@ -8,13 +8,13 @@ import 'package:license_plate_detect/core/models/checkAndDetail.dart';
 import 'package:license_plate_detect/feature/login/presention/LoginPage.dart';
 import 'package:license_plate_detect/ultis/checkInternet/checkInternet.dart';
 import 'package:license_plate_detect/ultis/dialog/alertDialog.dart';
-import 'package:license_plate_detect/ultis/toast/toast.dart';
+import 'package:license_plate_detect/ultis/toast/customtoast.dart';
 
 import '../../../core/component/app_text_field.dart';
 import '../../../core/models/User.dart';
 import '../../../core/theme/app_color.dart';
 import '../../../services/auth/auth.dart';
-import '../../../ultis/loading/loading.dart';
+import '../../../ultis/loading/customloading.dart';
 import '../../otp/presention/OTPPage.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -168,14 +168,14 @@ class _RegisterPageState extends State<RegisterPage> {
                       isAlertSet = true;
                     });
                   } else if (!checkSpace()) {
-                    Toast.presentWarningToast(
+                    CustomToast.presentWarningToast(
                         context, 'Không được để trống các ô!');
                   } else if (passwordConfirmController.text !=
                       passwordController.text) {
-                    Toast.presentWarningToast(
+                    CustomToast.presentWarningToast(
                         context, 'Mật khẩu phải giống nhau!');
                   } else {
-                    Loading.loadingtext(context, 'Đang đăng ký tài khoản');
+                    CustomLoading.loadingtext(context, 'Đang đăng ký tài khoản');
                     CheckAndDetail reg = await Authenticate.register(
                         emailController.text,
                         usernameController.text,
@@ -183,7 +183,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         passwordConfirmController.text);
                     if (reg.check == true) {
                       Timer(const Duration(milliseconds: 100), () {
-                        Loading.dismisloading(context);
+                        CustomLoading.dismisloading(context);
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
                           return OTPPage(
@@ -195,8 +195,8 @@ class _RegisterPageState extends State<RegisterPage> {
                         }));
                       });
                     } else if (reg.check == false) {
-                      Loading.dismisloading(context);
-                      Toast.presentErrorToast(context, '${reg.detail}');
+                      CustomLoading.dismisloading(context);
+                      CustomToast.presentErrorToast(context, '${reg.detail}');
                     }
                   }
                   // Navigator.push(context,

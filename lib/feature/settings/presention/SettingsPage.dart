@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:license_plate_detect/core/component/build_button.dart';
 
 import '../../../core/theme/app_color.dart';
-import '../../../pages/HomePage.dart';
+import '../../home/presention/HomePage.dart';
 import '../../../services/auth/auth.dart';
 import '../../login/presention/LoginPage.dart';
 import '../../personalinfomation/presention/PersonalInfomationPage.dart';
