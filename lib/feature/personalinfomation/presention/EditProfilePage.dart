@@ -7,6 +7,7 @@ import 'package:license_plate_detect/core/models/checkAndDetail.dart';
 import 'package:license_plate_detect/feature/personalinfomation/presention/PersonalInfomationPage.dart';
 import 'package:license_plate_detect/feature/personalinfomation/widget/button_widget.dart';
 import 'package:license_plate_detect/feature/personalinfomation/widget/profile_widget.dart';
+import 'package:license_plate_detect/feature/personalinfomation/widget/profile_widget_local.dart';
 import 'package:license_plate_detect/services/auth/auth.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:license_plate_detect/services/localstorage/localStorage.dart';
@@ -77,8 +78,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
           child: ListView(
         padding: EdgeInsets.symmetric(horizontal: 24),
         children: [
+          user.avatar != null ?
           ProfileWidget(
               imagePath: user.avatar!,
+              isEdit: true,
+              onNavigator: () {},
+              onClicked: () async {
+                await showAlertChooseImage(context);
+              }) : ProfileWidgetLocal(imagePath: "assets/avata_default.jpg",
               isEdit: true,
               onNavigator: () {},
               onClicked: () async {
@@ -92,7 +99,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           ),
           TextFieldWidget(
               label: 'Tên',
-              text: user.firstName!,
+              text: user.firstName != null ? user.firstName! : '',
               onChanged: (value) {
                 if (value != null) user.firstName = value;
               }),
@@ -101,7 +108,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           ),
           TextFieldWidget(
               label: 'Họ',
-              text: user.lastName!,
+              text: user.lastName != null ? user.lastName! : '',
               onChanged: (value) {
                 if (value != null) user.lastName = value;
               }),
@@ -144,7 +151,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       LocalStorage.writeUser(user);
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                        return PersonalInfomationPage();
+                        return const PersonalInfomationPage();
                       }));
                     } else if (cks.check == false) {
                       CustomLoading.dismisloading(context);
@@ -207,7 +214,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         CheckAndDetail cks = await Authenticate.updateImage(image!);
         if (cks.check == true) {
           Navigator.of(context).pop();
-          CustomToast.presentSuccessToast(context, 'Cập nhật thành công');
+          CustomToast.presentSuccessToast(context, 'Cập nhật ảnh thành công');
           setState(() {
             user.avatar = cks.detail;
             LocalStorage.deleteUser();

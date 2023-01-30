@@ -31,7 +31,7 @@ class AppTextStyle {
   );
   TextStyle headlineSmall = TextStyle(
     color: AppColor.blackGrey,
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: FontWeight.bold,
   );
   TextStyle titleLarge = TextStyle(

@@ -70,13 +70,10 @@ class Authenticate {
     return cks;
   }
 
-  // static Future<bool> canLoad() async {
-  //   if (await checkLogin() == true) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
+  static Future<CheckAndDetail> registerVehicle(String platenumber, String vehicletype) async {
+    CheckAndDetail cks = await AppAPI.RegisterVehicle(platenumber, vehicletype);
+    return cks; 
+  }
 
   static Future<void> logout() async {
     LocalStorage.deleteToken();

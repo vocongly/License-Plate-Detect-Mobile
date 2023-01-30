@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:license_plate_detect/feature/registervehicle/presention/register_vehicle_page.dart';
+import 'package:license_plate_detect/feature/turninandout/presention/TurnInAndOutPage.dart';
 import '/core/theme/app_theme.dart';
 import 'feature/login/presention/LoginPage.dart';
 import 'feature/home/presention/HomePage.dart';
@@ -20,7 +22,7 @@ class MyApp extends StatelessWidget {
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { 
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: "License Plate Detect",
@@ -41,5 +43,6 @@ class MyApp extends StatelessWidget {
             return CircularProgressIndicator();
           }),
         ));
+        //home: RegisterVehiclePage());
   }
 }

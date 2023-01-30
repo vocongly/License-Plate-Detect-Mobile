@@ -5,6 +5,8 @@ import 'dart:core';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
+import 'package:license_plate_detect/core/models/Region.dart';
+import 'package:license_plate_detect/core/models/vehicle.dart';
 import 'package:path/path.dart';
 import 'package:async/async.dart';
 
@@ -16,10 +18,10 @@ import 'package:license_plate_detect/services/localstorage/localStorage.dart';
 import 'package:license_plate_detect/ultis/checkInternet/checkInternet.dart';
 
 import '../../core/models/User.dart';
+import '../../core/models/vehicle_info.dart';
 import '../../core/theme/app_data.dart';
 
 class AppAPI {
-
   static Future<bool> Login(String username, String password) async {
     bool check = true;
     Token token = Token();
@@ -183,10 +185,11 @@ class AppAPI {
   }
 
   static Future<List<PlateInfo>> Upload(File imageFile) async {
+    var postUri = Uri.parse(
+        AppData.urlAPI + '/api/v1/license-plate-app/in_and_out/check_image');
 
-    var postUri = Uri.parse(AppData.urlAPI + '/api/v1/license-plate-app/in_and_out/check_image');
-
-    http.MultipartRequest request = await new http.MultipartRequest("POST", postUri);
+    http.MultipartRequest request =
+        await new http.MultipartRequest("POST", postUri);
 
     http.MultipartFile multipartFile =
         await http.MultipartFile.fromPath('image', imageFile.path);
@@ -201,11 +204,10 @@ class AppAPI {
       var list = json.decode(result) as List<dynamic>;
       plates = list.map((model) => PlateInfo.fromJson(model)).toList();
       return plates;
-    }else if(response.statusCode == 400){
-      List<PlateInfo> plates =[];
+    } else if (response.statusCode == 400) {
+      List<PlateInfo> plates = [];
       return plates;
-    } 
-    else {
+    } else {
       // If the server did not return a 201 CREATED response,
       // then throw an exception.
       throw Exception('Không nhận diện được.');
@@ -273,10 +275,120 @@ class AppAPI {
       reg.detail = 'Số điện thoại đã tồn tại';
     } else {
       reg.check = false;
-      reg.detail = json.decode(utf8.decode(response.bodyBytes))['detail'] as String;
+      reg.detail =
+          json.decode(utf8.decode(response.bodyBytes))['detail'] as String;
     }
     return reg;
   }
 
-  
+  static Future<List<Region>> GetRegion() async {
+    final response = await http.get(
+      Uri.parse(
+          AppData.urlAPI + '/api/v1/license-plate-app/regions/?page=0&limit=0'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+    if (response.statusCode == 200) {
+      var list =
+          json.decode(utf8.decode(response.bodyBytes))['list'] as List<dynamic>;
+      List<Region> regions = list.map((e) => Region.fromJson(e)).toList();
+      return regions;
+    } else {
+      // If the server did not return a 201 CREATED response,
+      // then throw an exception.
+      throw Exception('Failed to create album.');
+    }
+  }
+
+  static Future<List<Vehicle>> TurnInAndOut(
+      File image, String idRegion, String selectTurn) async {
+    Map<String, String> headers = {
+      'Content-Type': 'application/json; charset=UTF-8',
+    };
+
+    var postUri = Uri.parse(
+        AppData.urlAPI + '/api/v1/license-plate-app/in_and_out/turn_in_out');
+
+    http.MultipartRequest request =
+        await new http.MultipartRequest("POST", postUri);
+
+    http.MultipartFile multipartFile =
+        await http.MultipartFile.fromPath('image', image.path);
+
+    request.headers.addAll(headers);
+    request.files.add(multipartFile);
+    request.fields['id_region'] = idRegion;
+    request.fields['select_turn'] = selectTurn;
+    request.fields['vehicle_type'] = 'motorcycle';
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      var result = await response.stream.bytesToString();
+
+      var check = json.decode(result)[0]['information'];
+
+      if (check == 'already in') {
+        print('Xe đã xác nhận vào');
+        List<Vehicle> vehicled = [];
+        return vehicled;
+      } else if (check == 'already out') {
+        print('Xe đã xác nhận ra');
+        List<Vehicle> vehicled = [];
+        return vehicled;
+      } else {
+        var list = json.decode(result) as List<dynamic>;
+        List<Vehicle> vehicles = list.map((e) => Vehicle.fromJson(e)).toList();
+        return vehicles;
+      }
+    } else {
+      throw Exception('Failed to confirm vehicle');
+    }
+  }
+
+  static Future<CheckAndDetail> RegisterVehicle(
+      String platenumber, String vehicletype) async {
+    CheckAndDetail cks = new CheckAndDetail();
+
+    Token token = LocalStorage.getToken();
+
+    final response = await http.post(
+        Uri.parse(AppData.urlAPI + '/api/v1/license-plate-app/vehicles/me'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ${token.accessToken}'
+        },
+        body: jsonEncode({"plate": platenumber, "type": vehicletype}));
+    if (response.statusCode == 200) {
+      cks.check = true;
+    } else if (response.statusCode == 422) {
+      cks.check = false;
+      cks.detail = 'Biển số xe đã được đăng ký!';
+    } else {
+      cks.check = false;
+      cks.detail = 'Đã có lỗi xảy ra! Vui lòng thử lại';
+    }
+    return cks;
+  }
+
+  static Future<List<VehicleInfo>> VehicleByUser() async {
+    Token token = LocalStorage.getToken();
+
+    final response = await http.get(
+      Uri.parse(AppData.urlAPI +
+          '/api/v1/license-plate-app/vehicles/me?page=0&limit=20'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer ${token.accessToken}'
+      },
+    );
+    if (response.statusCode == 200) {
+      var list = json.decode(utf8.decode(response.bodyBytes))['list'] as List<dynamic>;
+      List<VehicleInfo> vehicles =list.map((e) => VehicleInfo.fromJson(e)).toList();
+      return vehicles;
+    } else {
+      throw Exception('Failed to create album.');
+    }
+  }
 }
