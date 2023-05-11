@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:license_plate_detect/core/models/checkAndDetail.dart';
 import 'package:license_plate_detect/core/theme/app_data.dart';
@@ -12,17 +13,22 @@ import 'package:license_plate_detect/ultis/checkInternet/checkInternet.dart';
 import '../../../ultis/loading/customloading.dart';
 import '../../../ultis/toast/customtoast.dart';
 
-class RegisterVehiclePage extends StatefulWidget {
-  const RegisterVehiclePage({super.key});
+import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/placeholder.dart';
+
+class registerVehivleCar extends StatefulWidget {
+  const registerVehivleCar({super.key});
 
   @override
-  State<RegisterVehiclePage> createState() => _RegisterVehiclePageState();
+  State<registerVehivleCar> createState() => _registerVehivleCarState();
 }
 
-class _RegisterVehiclePageState extends State<RegisterVehiclePage> {
+class _registerVehivleCarState extends State<registerVehivleCar> {
   TextEditingController plateController = TextEditingController();
 
-  List<Map> vehicletypes = [
+
+List<Map> vehicletypes = [
     {'id': '1', 'name': '1 tuần', 'image': AppData.icMotobike},
     {'id': '2', 'name': '1 tháng', 'image': AppData.icCar},
   ];
@@ -36,11 +42,10 @@ class _RegisterVehiclePageState extends State<RegisterVehiclePage> {
     'A1','A2','A3','A4','A5','A6','A7','A8','A9','A10'
   ];
 
-  var isDeviceConnected = false;
+var isDeviceConnected = false;
   bool isAlertSet = false;
 
   final formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -60,7 +65,7 @@ class _RegisterVehiclePageState extends State<RegisterVehiclePage> {
         backgroundColor: Colors.transparent,
         elevation: 0,
        title: Text(
-              'Đăng ký xe máy',
+              'Đăng ký xe hơi',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
       ),
@@ -79,18 +84,12 @@ class _RegisterVehiclePageState extends State<RegisterVehiclePage> {
               width: size.width,
               height: 130,
               fit: BoxFit.contain,
-              image: const AssetImage("assets/icons/moto.png"),
+              image: const AssetImage("assets/icons/car2.png"),
             ),
             
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                // AppTextFields(
-                //   controller: plateController,
-                //   prefix: Image.asset("assets/icons/ic_plate.png",width: 32,height: 32),
-                //   hint: "Biển số xe",
-                //   textInputAction: TextInputAction.done,
-                // ),
                 Form(
                   key: formKey,
                   child: Column(
