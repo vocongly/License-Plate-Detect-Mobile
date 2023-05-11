@@ -7,15 +7,11 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:license_plate_detect/core/models/Region.dart';
 import 'package:license_plate_detect/core/models/vehicle.dart';
-import 'package:path/path.dart';
-import 'package:async/async.dart';
 
 import 'package:license_plate_detect/core/models/PlateInfo.dart';
 import 'package:license_plate_detect/core/models/Token.dart';
 import 'package:license_plate_detect/core/models/checkAndDetail.dart';
-import 'package:license_plate_detect/feature/home/presention/HomePage.dart';
 import 'package:license_plate_detect/services/localstorage/localStorage.dart';
-import 'package:license_plate_detect/ultis/checkInternet/checkInternet.dart';
 
 import '../../core/models/User.dart';
 import '../../core/models/vehicle_info.dart';
