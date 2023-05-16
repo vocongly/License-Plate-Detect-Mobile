@@ -1,6 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -11,7 +8,7 @@ import 'package:license_plate_detect/core/models/Token.dart';
 import 'package:license_plate_detect/core/models/User.dart';
 import 'package:license_plate_detect/core/theme/app_color.dart';
 import 'package:license_plate_detect/feature/personalinfomation/presention/PersonalInfomationPage.dart';
-import 'package:license_plate_detect/feature/registervehicle/presention/register_vehicle_page.dart';
+import 'package:license_plate_detect/feature/registervehicle/presention/register_moto_page.dart';
 import 'package:license_plate_detect/feature/settings/presention/SettingsPage.dart';
 import 'package:license_plate_detect/services/api/app_api.dart';
 import '../../../core/component/build_button.dart';
@@ -33,8 +30,8 @@ bool loading = true;
 
 Image img = Image.asset("assets/0000_02187_b.jpg");
 
-Token tokenLocal = new Token();
-User userLocal = new User();
+Token tokenLocal = Token();
+User userLocal = User();
 
 class _MyHomePageState extends State<MyHomePage> {
   File? image;
@@ -58,13 +55,13 @@ class _MyHomePageState extends State<MyHomePage> {
   void _onItemTapped(int index) {
     if (index == 1) {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-        return PersonalInfomationPage();
+        return const PersonalInfomationPage();
       }));
     }
 
     if (index == 2) {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-        return SettingsPage();
+        return const SettingsPage();
       }));
     }
     setState(() {
@@ -88,27 +85,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     tokenLocal = LocalStorage.getToken();
     userLocal = LocalStorage.getUser();
 
-    // print('accesstoken: ' + tokenLocal.accessToken!.toString());
-    // print('tokentype: ' + tokenLocal.tokenType!.toString());
-    // print('id: ' + userLocal.sId.toString());
-    // print('email: ' + userLocal.email.toString());
-    // print('username: ' + userLocal.username.toString());
-    // print('phone number: ' + userLocal.phoneNumber.toString());
-    // print('firstname: ' + userLocal.firstName.toString());
-    // print('lastname: ' + userLocal.lastName.toString());
-    // print('avatar: ' + userLocal.avatar.toString());
-    print('homepage');
-    print(_selectedIndex);
     checkConnection();
     super.initState();
-
-    // //LocalStorage.writeToken(widget.token.accessToken, widget.token.tokenType);
-
-    // print(LocalStorage.checkToken());
   }
 
   @override
@@ -148,28 +129,31 @@ class _MyHomePageState extends State<MyHomePage> {
                   onClicked: () {
                     Navigator.pushReplacement(context,
                         MaterialPageRoute(builder: (context) {
-                      return PersonalInfomationPage();
+                      return const PersonalInfomationPage();
                     }));
                   },
                 ),
                 Hello(
                   username: userLocal.firstName,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 24,
                 ),
                 SignunVehicle(
                   onClicked: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
-                      return RegisterVehiclePage();
+                      return const RegisterVehiclePage();
                     }));
                   },
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 24,
                 ),
-                Text('Truy vấn biển số theo hình ảnh',style: Theme.of(context).textTheme.headlineSmall,),
+                Text(
+                  'Truy vấn biển số theo hình ảnh',
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
                 if (image != null)
                   Padding(
                     padding: const EdgeInsets.only(top: 12.0),
@@ -181,7 +165,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       fit: BoxFit.fill,
                     )),
                   ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Column(
@@ -190,14 +174,14 @@ class _MyHomePageState extends State<MyHomePage> {
                         title: 'Pick Gallery',
                         icon: Icons.image_outlined,
                         onClicked: () => pickImage(ImageSource.gallery)),
-                    SizedBox(
+                    const SizedBox(
                       height: 24,
                     ),
                     buildButton(
                         title: 'Pick Camera',
                         icon: Icons.camera_alt_outlined,
                         onClicked: () => pickImage(ImageSource.camera)),
-                    SizedBox(
+                    const SizedBox(
                       height: 24,
                     ),
                   ],
@@ -209,10 +193,12 @@ class _MyHomePageState extends State<MyHomePage> {
                             (BuildContext context, AsyncSnapshot snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.none) {
-                            return Center(child: CircularProgressIndicator());
+                            return const Center(
+                                child: CircularProgressIndicator());
                           } else if (snapshot.connectionState ==
                               ConnectionState.waiting) {
-                            return Center(child: CircularProgressIndicator());
+                            return const Center(
+                                child: CircularProgressIndicator());
                           } else if (snapshot.hasData) {
                             List<PlateInfo> plates = snapshot.data;
                             print(plates);
@@ -245,14 +231,14 @@ class _MyHomePageState extends State<MyHomePage> {
                                                   child: ListTile(
                                                       title: Text(
                                                     plates[index].plate!,
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                         color: Colors.black),
                                                   )));
                                             }),
                                       ),
                                     ],
                                   )
-                                : Center(
+                                : const Center(
                                     child: Text(
                                       'Không nhận diện được !',
                                       style: TextStyle(
@@ -262,24 +248,13 @@ class _MyHomePageState extends State<MyHomePage> {
                                   );
                           } else if (snapshot.hasError) {
                             return Text('Lỗi : ${snapshot.error}',
-                                style: TextStyle(
+                                style: const TextStyle(
                                     color: Colors.black, fontSize: 20));
                           }
-                          return CircularProgressIndicator();
+                          return const CircularProgressIndicator();
                         },
                       )
-                    : SizedBox(
-                        // height: 24,
-                        // child: Center(
-                        //   child: Text(
-                        //     'Không có dữ liệu',
-                        //     style: TextStyle(
-                        //         color: Colors.black,
-                        //         fontSize: 20,
-                        //         fontWeight: FontWeight.bold),
-                        //   ),
-                        // ),
-                      ),
+                    : const SizedBox.shrink(),
               ],
             ),
           ),

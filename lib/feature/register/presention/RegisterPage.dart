@@ -1,21 +1,16 @@
-// ignore_for_file: unnecessary_new
 
 import 'dart:async';
 
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:license_plate_detect/core/component/app_text_field.dart';
 import 'package:license_plate_detect/core/models/checkAndDetail.dart';
-import 'package:license_plate_detect/feature/login/presention/LoginPage.dart';
+import 'package:license_plate_detect/core/theme/app_color.dart';
+import 'package:license_plate_detect/feature/otp/presention/OTPPage.dart';
+import 'package:license_plate_detect/services/auth/auth.dart';
 import 'package:license_plate_detect/ultis/checkInternet/checkInternet.dart';
-import 'package:license_plate_detect/ultis/dialog/alertDialog.dart';
+import 'package:license_plate_detect/ultis/loading/customloading.dart';
 import 'package:license_plate_detect/ultis/toast/customtoast.dart';
 
-import '../../../core/component/app_text_field.dart';
-import '../../../core/models/User.dart';
-import '../../../core/theme/app_color.dart';
-import '../../../services/auth/auth.dart';
-import '../../../ultis/loading/customloading.dart';
-import '../../otp/presention/OTPPage.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -92,7 +87,7 @@ class _RegisterPageState extends State<RegisterPage> {
               children: [
                 AppTextFields(
                   controller: usernameController,
-                  prefix: Icon(Icons.person_outline),
+                  prefix: const Icon(Icons.person_outline),
                   hint: "Username",
                   textInputAction: TextInputAction.done,
                 ),
@@ -101,7 +96,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 AppTextFields(
                   controller: phonenumberController,
-                  prefix: Icon(Icons.phone_outlined),
+                  prefix: const Icon(Icons.phone_outlined),
                   hint: "Số điện thoại",
                   textInputAction: TextInputAction.done,
                 ),
@@ -110,7 +105,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 AppTextFields(
                   controller: emailController,
-                  prefix: Icon(Icons.alternate_email_rounded),
+                  prefix: const Icon(Icons.alternate_email_rounded),
                   hint: "Địa chỉ email",
                   textInputAction: TextInputAction.done,
                 ),
@@ -120,7 +115,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 AppTextFields(
                   obscureText: showPassword,
                   controller: passwordController,
-                  prefix: Icon(Icons.lock_outline_rounded),
+                  prefix: const Icon(Icons.lock_outline_rounded),
                   suffix: IconButton(
                       onPressed: () {
                         setState(() {
@@ -139,7 +134,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 AppTextFields(
                   obscureText: showPasswordConfirm,
                   controller: passwordConfirmController,
-                  prefix: Icon(Icons.lock_outline_rounded),
+                  prefix: const Icon(Icons.lock_outline_rounded),
                   suffix: IconButton(
                       onPressed: () {
                         setState(() {
@@ -199,10 +194,6 @@ class _RegisterPageState extends State<RegisterPage> {
                       CustomToast.presentErrorToast(context, '${reg.detail}');
                     }
                   }
-                  // Navigator.push(context,
-                  //             MaterialPageRoute(builder: (context) {
-                  //           return OTPPage();
-                  //         }));
                 },
                 style: ButtonStyle(
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(

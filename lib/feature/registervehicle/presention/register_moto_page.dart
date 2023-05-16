@@ -1,34 +1,27 @@
-
 import 'package:flutter/material.dart';
 import 'package:license_plate_detect/core/models/checkAndDetail.dart';
+import 'package:license_plate_detect/core/theme/app_color.dart';
 import 'package:license_plate_detect/core/theme/app_data.dart';
 import 'package:license_plate_detect/feature/home/presention/HomePage.dart';
 import 'package:license_plate_detect/services/auth/auth.dart';
 
-import '../../../core/component/app_text_field.dart';
-import '../../../core/theme/app_color.dart';
 
 import 'package:license_plate_detect/ultis/checkInternet/checkInternet.dart';
+import 'package:license_plate_detect/ultis/loading/customloading.dart';
+import 'package:license_plate_detect/ultis/toast/customtoast.dart';
 
-import '../../../ultis/loading/customloading.dart';
-import '../../../ultis/toast/customtoast.dart';
 
-import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-
-class registerVehivleCar extends StatefulWidget {
-  const registerVehivleCar({super.key});
+class RegisterVehiclePage extends StatefulWidget {
+  const RegisterVehiclePage({super.key});
 
   @override
-  State<registerVehivleCar> createState() => _registerVehivleCarState();
+  State<RegisterVehiclePage> createState() => _RegisterVehiclePageState();
 }
 
-class _registerVehivleCarState extends State<registerVehivleCar> {
+class _RegisterVehiclePageState extends State<RegisterVehiclePage> {
   TextEditingController plateController = TextEditingController();
 
-
-List<Map> vehicletypes = [
+  List<Map> vehicletypes = [
     {'id': '1', 'name': '1 tuần', 'image': AppData.icMotobike},
     {'id': '2', 'name': '1 tháng', 'image': AppData.icCar},
   ];
@@ -42,10 +35,11 @@ List<Map> vehicletypes = [
     'A1','A2','A3','A4','A5','A6','A7','A8','A9','A10'
   ];
 
-var isDeviceConnected = false;
+  var isDeviceConnected = false;
   bool isAlertSet = false;
 
   final formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -65,7 +59,7 @@ var isDeviceConnected = false;
         backgroundColor: Colors.transparent,
         elevation: 0,
        title: Text(
-              'Đăng ký xe hơi',
+              'Đăng ký xe máy',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
       ),
@@ -84,7 +78,7 @@ var isDeviceConnected = false;
               width: size.width,
               height: 130,
               fit: BoxFit.contain,
-              image: const AssetImage("assets/icons/car2.png"),
+              image: const AssetImage("assets/icons/moto.png"),
             ),
             
             Column(
@@ -270,7 +264,7 @@ var isDeviceConnected = false;
                                  
                                   Row(
                                     children: [
-                                      Image.asset('assets/icons/location.png'),
+                                      Image.asset(AppData.icLocation),
                                       Text(valueItem),
                                     ],
                                   ),

@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:license_plate_detect/core/theme/app_color.dart';
-import 'package:license_plate_detect/feature/registervehicle/presention/register_vehicle_page.dart';
-
-import '../../registervehicle/presention/register_vehicle_car.dart';
-
-
+import 'package:license_plate_detect/feature/registervehicle/presention/register_car_page.dart';
 
 class SignunVehicle extends StatelessWidget {
   final VoidCallback onClicked;
@@ -28,7 +24,7 @@ class SignunVehicle extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(
-                    'Đăng ký xe!',
+                    'Đăng ký xe',
                     style: Theme.of(context).textTheme.titleLarge!.copyWith(
                           color: AppColor.white,
                         ),
@@ -40,23 +36,18 @@ class SignunVehicle extends StatelessWidget {
                         child: Container(
                           width: 100,
                           height: 45,
-                         decoration: BoxDecoration(
+                          decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
                               color: AppColor.white),
                           child: ElevatedButton(
-                            
                             style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.white,
-                               
-                                
-                                ),
-                            
+                              backgroundColor: Colors.white,
+                            ),
                             onPressed: () {
                               Navigator.push(context, MaterialPageRoute(
                                 builder: (context) {
-                                  return const registerVehivleCar();
+                                  return const RegisterVehivleCar();
                                 },
-                                
                               ));
                             },
                             child: Text('Xe hơi',
