@@ -30,14 +30,16 @@ class SignunVehicle extends StatelessWidget {
                         ),
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
-                          width: 100,
-                          height: 45,
+                          width: 110,
+                          height: 50,
+                          
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
+                              borderRadius: BorderRadius.circular(10),
                               color: AppColor.white),
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
@@ -48,7 +50,8 @@ class SignunVehicle extends StatelessWidget {
                                 builder: (context) {
                                   return const RegisterVehivleCar();
                                 },
-                              ));
+                              )
+                              );
                             },
                             child: Text('Xe hơi',
                                 style: Theme.of(context)
@@ -61,7 +64,9 @@ class SignunVehicle extends StatelessWidget {
                       InkWell(
                         onTap: onClicked,
                         child: Container(
-                          padding: const EdgeInsets.all(8),
+                          width: 110,
+                          height: 50,
+                          padding: const EdgeInsets.symmetric(vertical: 10),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
                               color: AppColor.white),
