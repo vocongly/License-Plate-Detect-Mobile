@@ -4,6 +4,7 @@ import 'package:license_plate_detect/core/theme/app_color.dart';
 import 'package:license_plate_detect/core/theme/app_data.dart';
 import 'package:license_plate_detect/feature/home/presention/HomePage.dart';
 import 'package:license_plate_detect/feature/pay/pay_page.dart';
+import 'package:license_plate_detect/feature/registervehicle/widget/pickeddate.dart';
 import 'package:license_plate_detect/services/auth/auth.dart';
 
 import 'package:license_plate_detect/ultis/checkInternet/checkInternet.dart';
@@ -128,22 +129,7 @@ class _RegisterVehiclePageState extends State<RegisterVehiclePage> {
                 const SizedBox(
                   height: 10,
                 ),
-                Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                  const Icon(
-                    Icons.calendar_month,
-                    size: 32,
-                  ),
-                  const SizedBox(
-                    width: 24,
-                  ),
-                  Expanded(
-                    child: TextFormField(
-                      controller: plateController,
-                      decoration:
-                          const InputDecoration(labelText: 'Nhập ngày gửi'),
-                    ),
-                  ),
-                ]),
+                const PickedDate()
               ],
             ),
             SizedBox(

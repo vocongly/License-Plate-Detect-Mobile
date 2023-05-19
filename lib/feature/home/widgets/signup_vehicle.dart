@@ -9,6 +9,7 @@ class SignunVehicle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Container(
       height: 150,
       padding: const EdgeInsets.all(12),
@@ -23,50 +24,56 @@ class SignunVehicle extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Text(
-                    'Đăng ký xe',
-                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                          color: AppColor.white,
-                        ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: SizedBox(
+                      child: Text(
+                        'Đăng ký xe',
+                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                              color: AppColor.white,
+                            ),
+                            
+                      ),
+                    ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Container(
+                        child: SizedBox(
                           width: 110,
                           height: 50,
-                          
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: AppColor.white),
                           child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.white,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.white,
+                                 
+                              ), 
+                              
+                              
+                              onPressed: () {
+                                Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) {
+                                    return const RegisterVehivleCar();
+                                  },
+                                ));
+                              },
+                              child: Text('Xe hơi',
+                              textAlign: TextAlign.center,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge!
+                                      .copyWith(color: AppColor.primaryColor)),
                             ),
-                            onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(
-                                builder: (context) {
-                                  return const RegisterVehivleCar();
-                                },
-                              )
-                              );
-                            },
-                            child: Text('Xe hơi',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleLarge!
-                                    .copyWith(color: AppColor.primaryColor)),
-                          ),
                         ),
+                        
                       ),
                       InkWell(
                         onTap: onClicked,
                         child: Container(
                           width: 110,
                           height: 50,
-                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          padding: const EdgeInsets.all(9),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
                               color: AppColor.white),

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:license_plate_detect/core/models/checkAndDetail.dart';
 import 'package:license_plate_detect/core/theme/app_color.dart';
 import 'package:license_plate_detect/core/theme/app_data.dart';
 import 'package:license_plate_detect/feature/home/presention/HomePage.dart';
 import 'package:license_plate_detect/feature/pay/pay_page.dart';
+import 'package:license_plate_detect/feature/registervehicle/widget/pickeddate.dart';
 import 'package:license_plate_detect/services/auth/auth.dart';
 
 import 'package:license_plate_detect/ultis/checkInternet/checkInternet.dart';
@@ -20,6 +22,7 @@ class RegisterVehivleCar extends StatefulWidget {
 class _RegisterVehivleCarState extends State<RegisterVehivleCar> {
   TextEditingController plateController = TextEditingController();
 
+
   List<Map> vehicletypes = [
     {'id': '1', 'name': '1 tuần', 'image': AppData.icMotobike},
     {'id': '2', 'name': '1 tháng', 'image': AppData.icCar},
@@ -27,7 +30,7 @@ class _RegisterVehivleCarState extends State<RegisterVehivleCar> {
 
   String? _selected;
   String? vehicletype;
- 
+
 
   
   var isDeviceConnected = false;
@@ -126,25 +129,11 @@ class _RegisterVehivleCarState extends State<RegisterVehivleCar> {
                   height: 10,
                 ),
                
-                
-                Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                  const Icon(
-                    Icons.calendar_month,
-                    size: 32,
-                  ),
-                  const SizedBox(
-                    width: 24,
-                  ),
-                  Expanded(
-                    child: TextFormField(
-                      controller: plateController,
-                      decoration:
-                          const InputDecoration(labelText: 'Nhập ngày gửi'),
-                    ),
-                  ),
-                ]),
+                const PickedDate()
+               
                
               ],
+              
             ),
             SizedBox(
               width: size.width,
@@ -195,7 +184,9 @@ class _RegisterVehivleCarState extends State<RegisterVehivleCar> {
                 //   }
                 // },
                 style: ButtonStyle(
+                  
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      
                         RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)))),
                 child: const Text(
