@@ -368,7 +368,7 @@ class AppAPI {
     return cks;
   }
 
-  static Future<List<VehicleInfo>> VehicleByUser() async {
+  static Future<List<VehicleInfo>> vehicleByUser() async {
     Token token = LocalStorage.getToken();
 
     final response = await http.get(

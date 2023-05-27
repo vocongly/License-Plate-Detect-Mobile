@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 
 class AppData{
   static const String urlAPI = 'http://13.112.242.104';

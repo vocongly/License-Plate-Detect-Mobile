@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:license_plate_detect/feature/registervehicle/presention/register_vehicle_page.dart';
-import 'package:license_plate_detect/feature/turninandout/presention/TurnInAndOutPage.dart';
 import '/core/theme/app_theme.dart';
-import 'feature/login/presention/LoginPage.dart';
-import 'feature/home/presention/HomePage.dart';
+import 'presentation/login/presention/LoginPage.dart';
+import 'presentation/home/presention/HomePage.dart';
 import 'services/auth/auth.dart';
 
 void main() async {
@@ -20,6 +18,8 @@ void main() async {
 class MyApp extends StatelessWidget {
   final Authenticate _auth = Authenticate();
 
+  MyApp({super.key});
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) { 
@@ -33,14 +33,14 @@ class MyApp extends StatelessWidget {
           future: _auth.checkLogin(),
           builder: ((context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator();
+              return const CircularProgressIndicator();
             } else if (snapshot.hasData) {
               if (snapshot.data == true) {
-                return MyHomePage();
+                return const MyHomePage();
               } 
-              return LoginPage();
+              return const LoginPage();
             }
-            return CircularProgressIndicator();
+            return const CircularProgressIndicator();
           }),
         ));
         //home: RegisterVehiclePage());

@@ -13,12 +13,4 @@ class VehicleInfo {
     type = json['type'];
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['plate'] = this.plate;
-    data['user_id'] = this.userId;
-    data['type'] = this.type;
-    return data;
-  }
 }

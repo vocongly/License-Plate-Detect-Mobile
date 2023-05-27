@@ -1,9 +1,10 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 
-import '../theme/app_color.dart';
 
-class buildButton extends StatelessWidget {
-  buildButton(
+class BuildButton extends StatelessWidget {
+  BuildButton(
       {super.key,
       required this.title,
       required this.icon,
@@ -19,10 +20,8 @@ class buildButton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-            minimumSize: Size.fromHeight(56),
-            primary: AppColor.primaryColor,
-            onPrimary: Colors.white,
-            textStyle: TextStyle(fontSize: 20)),
+            minimumSize: const Size.fromHeight(56),
+            textStyle: const TextStyle(fontSize: 20)),
         onPressed: onClicked,
         child: Row(
           children: [

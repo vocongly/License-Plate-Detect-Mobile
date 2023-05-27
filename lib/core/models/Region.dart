@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 class Region {
   String? sId;
   String? region;
@@ -12,26 +14,26 @@ class Region {
     region = json['region'];
     type = json['type'];
     coordinate = json['coordinate'] != null
-        ? new Coordinate.fromJson(json['coordinate'])
+        ? Coordinate.fromJson(json['coordinate'])
         : null;
     if (json['cameras'] != null) {
       cameras = <Cameras>[];
       json['cameras'].forEach((v) {
-        cameras!.add(new Cameras.fromJson(v));
+        cameras!.add(Cameras.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['region'] = this.region;
-    data['type'] = this.type;
-    if (this.coordinate != null) {
-      data['coordinate'] = this.coordinate!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    data['region'] = region;
+    data['type'] = type;
+    if (coordinate != null) {
+      data['coordinate'] = coordinate!.toJson();
     }
-    if (this.cameras != null) {
-      data['cameras'] = this.cameras!.map((v) => v.toJson()).toList();
+    if (cameras != null) {
+      data['cameras'] = cameras!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -49,9 +51,9 @@ class Coordinate {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['longitude'] = this.longitude;
-    data['latitude'] = this.latitude;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['longitude'] = longitude;
+    data['latitude'] = latitude;
     return data;
   }
 }
@@ -70,10 +72,10 @@ class Cameras {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['rtsp_url'] = this.rtspUrl;
-    data['type'] = this.type;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['name'] = name;
+    data['rtsp_url'] = rtspUrl;
+    data['type'] = type;
     return data;
   }
 }

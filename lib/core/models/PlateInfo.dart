@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 class PlateInfo {
   String? plate;
   Coordinate? coordinate;
@@ -7,15 +9,15 @@ class PlateInfo {
   PlateInfo.fromJson(Map<String, dynamic> json) {
     plate = json['plate'];
     coordinate = json['coordinate'] != null
-        ? new Coordinate.fromJson(json['coordinate'])
+        ? Coordinate.fromJson(json['coordinate'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['plate'] = this.plate;
-    if (this.coordinate != null) {
-      data['coordinate'] = this.coordinate!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['plate'] = plate;
+    if (coordinate != null) {
+      data['coordinate'] = coordinate!.toJson();
     }
     return data;
   }
@@ -37,11 +39,11 @@ class Coordinate {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['x0'] = this.x0;
-    data['y0'] = this.y0;
-    data['x1'] = this.x1;
-    data['y1'] = this.y1;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['x0'] = x0;
+    data['y0'] = y0;
+    data['x1'] = x1;
+    data['y1'] = y1;
     return data;
   }
 }
