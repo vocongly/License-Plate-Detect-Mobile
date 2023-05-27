@@ -1,18 +1,17 @@
+// ignore_for_file: file_names
+
 import 'dart:async';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:license_plate_detect/core/models/checkAndDetail.dart';
-import 'package:license_plate_detect/presentation/login/presention/LoginPage.dart';
+import 'package:license_plate_detect/core/theme/app_color.dart';
 import 'package:license_plate_detect/presentation/resetpassword/presention/ResetPasswordPage.dart';
 import 'package:license_plate_detect/services/auth/auth.dart';
 import 'package:license_plate_detect/ultis/checkInternet/checkInternet.dart';
 import 'package:license_plate_detect/ultis/toast/customtoast.dart';
 
-import '../../../core/theme/app_color.dart';
-import '../../../ultis/loading/customloading.dart';
-import '../../register/presention/RegisterPage.dart';
 
 class OTPResetPasswordPage extends StatefulWidget {
   OTPResetPasswordPage({

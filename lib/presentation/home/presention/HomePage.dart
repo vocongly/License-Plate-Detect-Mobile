@@ -10,7 +10,7 @@ import 'package:license_plate_detect/core/models/Token.dart';
 import 'package:license_plate_detect/core/models/User.dart';
 import 'package:license_plate_detect/core/theme/app_color.dart';
 import 'package:license_plate_detect/presentation/personalinfomation/presention/PersonalInfomationPage.dart';
-import 'package:license_plate_detect/presentation/registervehicle/presention/register_vehicle_page.dart';
+import 'package:license_plate_detect/presentation/registervehicle/presention/register_moto_page.dart';
 import 'package:license_plate_detect/presentation/settings/presention/SettingsPage.dart';
 import 'package:license_plate_detect/services/api/app_api.dart';
 import '../../../core/component/build_button.dart';
@@ -90,21 +90,8 @@ class _MyHomePageState extends State<MyHomePage> {
     tokenLocal = LocalStorage.getToken();
     userLocal = LocalStorage.getUser();
 
-    // print('accesstoken: ' + tokenLocal.accessToken!.toString());
-    // print('tokentype: ' + tokenLocal.tokenType!.toString());
-    // print('id: ' + userLocal.sId.toString());
-    // print('email: ' + userLocal.email.toString());
-    // print('username: ' + userLocal.username.toString());
-    // print('phone number: ' + userLocal.phoneNumber.toString());
-    // print('firstname: ' + userLocal.firstName.toString());
-    // print('lastname: ' + userLocal.lastName.toString());
-    // print('avatar: ' + userLocal.avatar.toString());
     checkConnection();
     super.initState();
-
-    // //LocalStorage.writeToken(widget.token.accessToken, widget.token.tokenType);
-
-    // print(LocalStorage.checkToken());
   }
 
   @override
@@ -207,10 +194,12 @@ class _MyHomePageState extends State<MyHomePage> {
                             (BuildContext context, AsyncSnapshot snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.none) {
-                            return const Center(child: CircularProgressIndicator());
+                            return const Center(
+                                child: CircularProgressIndicator());
                           } else if (snapshot.connectionState ==
                               ConnectionState.waiting) {
-                            return const Center(child: CircularProgressIndicator());
+                            return const Center(
+                                child: CircularProgressIndicator());
                           } else if (snapshot.hasData) {
                             List<PlateInfo> plates = snapshot.data;
                             return plates.isNotEmpty

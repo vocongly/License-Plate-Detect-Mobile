@@ -1,23 +1,19 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:license_plate_detect/core/component/app_text_field.dart';
-import 'package:license_plate_detect/core/component/build_button.dart';
+import 'package:license_plate_detect/core/models/User.dart';
 import 'package:license_plate_detect/core/models/vehicle_info.dart';
+import 'package:license_plate_detect/core/theme/app_color.dart';
 import 'package:license_plate_detect/presentation/personalinfomation/presention/EditProfilePage.dart';
 import 'package:license_plate_detect/presentation/personalinfomation/widget/profile_widget.dart';
 import 'package:license_plate_detect/presentation/personalinfomation/widget/profile_widget_local.dart';
+import 'package:license_plate_detect/presentation/personalinfomation/widget/vehicle_item.dart';
 import 'package:license_plate_detect/presentation/settings/presention/SettingsPage.dart';
 import 'package:license_plate_detect/presentation/home/presention/HomePage.dart';
 import 'package:license_plate_detect/services/api/app_api.dart';
+import 'package:license_plate_detect/services/localstorage/localStorage.dart';
 import 'package:license_plate_detect/ultis/checkInternet/checkInternet.dart';
 
-import '../../../core/models/User.dart';
-import '../../../core/theme/app_color.dart';
-import '../../../core/theme/app_data.dart';
-import '../../../services/localstorage/localStorage.dart';
-import '../widget/button_widget.dart';
-import '../widget/vehicle_item.dart';
 
 class PersonalInfomationPage extends StatefulWidget {
   const PersonalInfomationPage({super.key});
@@ -26,7 +22,7 @@ class PersonalInfomationPage extends StatefulWidget {
   State<PersonalInfomationPage> createState() => _PersonalInfomationPageState();
 }
 
-User userLocal = new User();
+User userLocal = User();
 
 class _PersonalInfomationPageState extends State<PersonalInfomationPage> {
   int _selectedIndex = 1;

@@ -1,17 +1,18 @@
+// ignore_for_file: must_be_immutable
+
 import 'dart:async';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:license_plate_detect/core/models/checkAndDetail.dart';
+import 'package:license_plate_detect/core/theme/app_color.dart';
 import 'package:license_plate_detect/presentation/login/presention/LoginPage.dart';
 import 'package:license_plate_detect/services/auth/auth.dart';
 import 'package:license_plate_detect/ultis/checkInternet/checkInternet.dart';
+import 'package:license_plate_detect/ultis/loading/customloading.dart';
 import 'package:license_plate_detect/ultis/toast/customtoast.dart';
 
-import '../../../core/theme/app_color.dart';
-import '../../../ultis/loading/customloading.dart';
-import '../../register/presention/RegisterPage.dart';
 
 class OTPPage extends StatefulWidget {
   OTPPage(
@@ -33,10 +34,10 @@ class OTPPage extends StatefulWidget {
 }
 
 class _OTPPageState extends State<OTPPage> {
-  TextEditingController otpController1 = new TextEditingController();
-  TextEditingController otpController2 = new TextEditingController();
-  TextEditingController otpController3 = new TextEditingController();
-  TextEditingController otpController4 = new TextEditingController();
+  TextEditingController otpController1 = TextEditingController();
+  TextEditingController otpController2 = TextEditingController();
+  TextEditingController otpController3 = TextEditingController();
+  TextEditingController otpController4 = TextEditingController();
 
   var isDeviceConnected = false;
   bool isAlertSet = false;
@@ -236,7 +237,7 @@ class _OTPPageState extends State<OTPPage> {
                   text: "Gửi lại mã!",
                   style: Theme.of(context)
                       .textTheme
-                      .button
+                      .labelLarge
                       ?.copyWith(color: AppColor.primaryColor),
                   recognizer: TapGestureRecognizer()
                     ..onTap = () async {
@@ -292,7 +293,7 @@ class _OTPPageState extends State<OTPPage> {
                             context, 'Tạo tài khoản thành công!');
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return LoginPage();
+                          return const LoginPage();
                         }));
                       });
                     } else if (reg.check == false) {
