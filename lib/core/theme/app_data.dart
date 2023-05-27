@@ -15,6 +15,8 @@ class AppData {
   static const String icLocation = iconsPath + "location.png";
   static const String icMomo = iconsPath + "momo.png";
   static const String imgMoto = iconsPath + "moto.png";
+  static const String icMbbank = iconsPath + "mbbank.png";
+
 
   // images
   static const String imgCar = imagesPath + "car.png";

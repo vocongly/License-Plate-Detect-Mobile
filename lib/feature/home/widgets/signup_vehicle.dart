@@ -5,7 +5,7 @@ import 'package:license_plate_detect/feature/registervehicle/presention/register
 class SignunVehicle extends StatelessWidget {
   final VoidCallback onClicked;
 
-  const SignunVehicle({Key? key, required this.onClicked});
+  const SignunVehicle({super.key, required this.onClicked});
 
   @override
   Widget build(BuildContext context) {

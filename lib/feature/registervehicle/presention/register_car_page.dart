@@ -1,16 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:license_plate_detect/core/models/checkAndDetail.dart';
 import 'package:license_plate_detect/core/theme/app_color.dart';
 import 'package:license_plate_detect/core/theme/app_data.dart';
-import 'package:license_plate_detect/feature/home/presention/HomePage.dart';
 import 'package:license_plate_detect/feature/pay/pay_page.dart';
-import 'package:license_plate_detect/feature/registervehicle/widget/pickeddate.dart';
-import 'package:license_plate_detect/services/auth/auth.dart';
 
-import 'package:license_plate_detect/ultis/checkInternet/checkInternet.dart';
-import 'package:license_plate_detect/ultis/loading/customloading.dart';
-import 'package:license_plate_detect/ultis/toast/customtoast.dart';
+import 'package:license_plate_detect/feature/registervehicle/widget/pickeddate.dart';
 
 class RegisterVehivleCar extends StatefulWidget {
   const RegisterVehivleCar({super.key});
@@ -22,16 +15,7 @@ class RegisterVehivleCar extends StatefulWidget {
 class _RegisterVehivleCarState extends State<RegisterVehivleCar> {
   TextEditingController plateController = TextEditingController();
 
-
-  List<Map> vehicletypes = [
-    {'id': '1', 'name': '1 tuần', 'image': AppData.icMotobike},
-    {'id': '2', 'name': '1 tháng', 'image': AppData.icCar},
-  ];
-
   String? _selected;
-  String? vehicletype;
-
-
   
   var isDeviceConnected = false;
   bool isAlertSet = false;
@@ -83,7 +67,8 @@ class _RegisterVehivleCarState extends State<RegisterVehivleCar> {
                 Form(
                   key: formKey,
                   child: Column(
-                    children: [
+                    children: <Widget> [
+                  
                        Align(
                         alignment: Alignment.topLeft,
                          child: Padding(
@@ -129,7 +114,8 @@ class _RegisterVehivleCarState extends State<RegisterVehivleCar> {
                   height: 10,
                 ),
                
-                const PickedDate()
+                const PickedDate(),
+              
                
                
               ],

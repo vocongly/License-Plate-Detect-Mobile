@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:license_plate_detect/core/theme/app_color.dart';
 import 'package:license_plate_detect/feature/pay/widget/package.dart';
+
 import 'package:license_plate_detect/feature/pay/widget/payment_methods.dart';
 import 'package:license_plate_detect/feature/personalinfomation/presention/person_backup.dart';
 
 
+
+
 class PayPage extends StatefulWidget {
+  
   const PayPage({super.key});
 
   @override
   State<PayPage> createState() => _PayPageState();
 }
-
-
-
-
 
 
 class _PayPageState extends State<PayPage> {
@@ -81,7 +81,10 @@ class _PayPageState extends State<PayPage> {
                   ),
                   const PaymentMethods(
 
-                  )
+                  ),
+
+              
+                  
                 ],
 
               ),
@@ -119,3 +122,5 @@ class _PayPageState extends State<PayPage> {
     );
   }
 }
+
+

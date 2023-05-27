@@ -9,7 +9,7 @@ class ButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ElevatedButton(
     style: ElevatedButton.styleFrom(
-      shape: StadiumBorder(),
+      shape: const StadiumBorder(),
       onPrimary: Colors.white
     ),
     onPressed: onClicked, 

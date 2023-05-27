@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:license_plate_detect/core/models/checkAndDetail.dart';
 import 'package:license_plate_detect/core/theme/app_color.dart';
 import 'package:license_plate_detect/core/theme/app_data.dart';
-import 'package:license_plate_detect/feature/home/presention/HomePage.dart';
 import 'package:license_plate_detect/feature/pay/pay_page.dart';
 import 'package:license_plate_detect/feature/registervehicle/widget/pickeddate.dart';
-import 'package:license_plate_detect/services/auth/auth.dart';
-
-import 'package:license_plate_detect/ultis/checkInternet/checkInternet.dart';
-import 'package:license_plate_detect/ultis/loading/customloading.dart';
-import 'package:license_plate_detect/ultis/toast/customtoast.dart';
 
 class RegisterVehiclePage extends StatefulWidget {
   const RegisterVehiclePage({super.key});
@@ -21,17 +14,10 @@ class RegisterVehiclePage extends StatefulWidget {
 class _RegisterVehiclePageState extends State<RegisterVehiclePage> {
   TextEditingController plateController = TextEditingController();
 
-  List<Map> vehicletypes = [
-    {'id': '1', 'name': '1 tuần', 'image': AppData.icMotobike},
-    {'id': '2', 'name': '1 tháng', 'image': AppData.icCar},
-  ];
+
 
   String? _selected;
-  String? valueChoose;
-  String? vehicletype;
-  String? newValue;
 
-  List listItem = ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8', 'A9', 'A10'];
 
   var isDeviceConnected = false;
   bool isAlertSet = false;

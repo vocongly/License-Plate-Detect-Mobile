@@ -171,7 +171,7 @@ class _PersonalInfomationPageState extends State<PersonalInfomationPage> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           SizedBox(
-                            height: 70,
+                            height: 60,
                           ),
                           buildName(userLocal),
                         ],

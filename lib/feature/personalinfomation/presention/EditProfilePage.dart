@@ -91,10 +91,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
               onClicked: () async {
                 await showAlertChooseImage(context);
               }),
-          SizedBox(
+          const SizedBox(
             height: 24,
           ),
-          SizedBox(
+          const SizedBox(
             height: 24,
           ),
           TextFieldWidget(
@@ -103,7 +103,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               onChanged: (value) {
                 if (value != null) user.firstName = value;
               }),
-          SizedBox(
+          const SizedBox(
             height: 24,
           ),
           TextFieldWidget(
@@ -112,7 +112,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               onChanged: (value) {
                 if (value != null) user.lastName = value;
               }),
-          SizedBox(
+          const SizedBox(
             height: 24,
           ),
           TextFieldWidget(
@@ -121,7 +121,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               onChanged: (value) {
                 if (value != null) user.phoneNumber = value;
               }),
-          SizedBox(
+          const SizedBox(
             height: 24,
           ),
           Center(
@@ -170,7 +170,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Chọn chức năng'),
+            title: const Text('Chọn chức năng'),
             content: SingleChildScrollView(
               child: ListBody(
                 children: [
@@ -179,7 +179,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     onPressed: () async {
                       await pickandupdateimage(context, ImageSource.gallery);
                     },
-                    child: Text(
+                    child: const Text(
                       'Trong máy',
                       style: TextStyle(fontSize: 20, color: Colors.black),
                     ),
@@ -189,7 +189,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     onPressed: () async {
                       await pickandupdateimage(context, ImageSource.camera);
                     },
-                    child: Text('Máy ảnh',
+                    child: const Text('Máy ảnh',
                         style: TextStyle(fontSize: 20, color: Colors.black)),
                   )),
                 ],
