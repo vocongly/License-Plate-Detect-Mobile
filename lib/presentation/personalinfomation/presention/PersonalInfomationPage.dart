@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, file_names
 
 import 'package:flutter/material.dart';
 import 'package:license_plate_detect/core/models/User.dart';
@@ -13,7 +13,6 @@ import 'package:license_plate_detect/presentation/home/presention/HomePage.dart'
 import 'package:license_plate_detect/services/api/app_api.dart';
 import 'package:license_plate_detect/services/localstorage/localStorage.dart';
 import 'package:license_plate_detect/ultis/checkInternet/checkInternet.dart';
-
 
 class PersonalInfomationPage extends StatefulWidget {
   const PersonalInfomationPage({super.key});
@@ -60,16 +59,10 @@ class _PersonalInfomationPageState extends State<PersonalInfomationPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     checkConnection();
-    setState((){
+    setState(() {
       userLocal = LocalStorage.getUser();
     });
-    // print('username : '+userLocal.username!);
-    // print('email : '+userLocal.email!);
-    // print('firstname : '+userLocal.firstName!);
-    // print('lastname : '+userLocal.lastName!);
-    // print('phonenumber : '+userLocal.phoneNumber!);
     super.initState();
   }
 
@@ -78,16 +71,6 @@ class _PersonalInfomationPageState extends State<PersonalInfomationPage> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: AppColor.white,
-      appBar: AppBar(
-        title: Text(
-            "Thông tin cá nhân",
-            textAlign: TextAlign.start,
-            style: Theme.of(context).textTheme.headlineMedium!,
-          ),
-        backgroundColor: Colors.transparent,
-        leadingWidth: 0,
-        elevation: 0,
-      ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -109,105 +92,44 @@ class _PersonalInfomationPageState extends State<PersonalInfomationPage> {
         onTap: _onItemTapped,
       ),
       body: SafeArea(
-        child: ListView(children: [
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.start,
-          //   children: [
-          //     Padding(
-          //       padding: const EdgeInsets.all(24),
-          //       child: Text('Thông tin cá nhân',
-          //           style: Theme.of(context).textTheme.headlineMedium!
-          //           //.copyWith(color: Colors.white),
-          //           ),
-          //     ),
-          //   ],
-          // ),
-          // SizedBox(
-          //   height: 24,
-          // ),
-          // Container(
-          //   height: size.height *  0.4,
-          //   width: size.width,
-          //   decoration: BoxDecoration(
-          //     borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20),bottomRight: Radius.circular(20)),
-          //     color: AppColor.primarySwatch[50]),
-          // ),
+        child: ListView(
+          padding: EdgeInsets.symmetric(horizontal: 16,vertical: 16),
+          children: [
+          Center(
+              child: userLocal.avatar != null
+                  ? ProfileWidget(
+                      imagePath: userLocal.avatar!,
+                      onNavigator: (() {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return EditProfilePage();
+                        }));
+                      }),
+                      onClicked: () {})
+                  : ProfileWidgetLocal(
+                      imagePath: "assets/avata_default.jpg",
+                      onNavigator: (() {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return EditProfilePage();
+                        }));
+                      }),
+                      onClicked: () {})),
           Container(
-            height: size.height * 0.40,
-            //color: Colors.amber,
-            margin: EdgeInsets.symmetric(horizontal: 24),
-            child: LayoutBuilder(builder: (context, constraints) {
-              double innerHeight = constraints.maxHeight;
-              double innerWidth = constraints.maxWidth;
-              return Stack(
-                fit: StackFit.expand,
-                children: [
-                  Positioned(
-                    bottom: 30,
-                    left: 0,
-                    right: 0,
-                    child: Container(
-                      height: innerHeight * 0.55,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          boxShadow: const [
-                            BoxShadow(
-                                color: Colors.grey,
-                                blurRadius: 5.0,
-                                offset: Offset(0, 5)),
-                            // BoxShadow(
-                            //   color: Colors.white,
-                            //   offset: Offset(-2,0)),
-                            // BoxShadow(
-                            //   color: Colors.white,
-                            //   offset: Offset(-5,0)),
-                          ],
-                          color: Colors.grey[200]),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            height: 70,
-                          ),
-                          buildName(userLocal),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    child: Center(
-                        child: userLocal.avatar != null
-                            ? ProfileWidget(
-                                imagePath: userLocal.avatar!,
-                                onNavigator: (() {
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) {
-                                    return EditProfilePage();
-                                  }));
-                                }),
-                                onClicked: () {})
-                            : ProfileWidgetLocal(
-                                imagePath: "assets/avata_default.jpg",
-                                onNavigator: (() {
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) {
-                                    return EditProfilePage();
-                                  }));
-                                }),
-                                onClicked: () {})),
-                  )
-                ],
-              );
-            }),
+            margin: const EdgeInsets.only(top: 24),
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30),
+                color: Colors.grey[200]),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                buildName(userLocal),
+              ],
+            ),
           ),
-          // SizedBox(
-          //   height: 24,
-          // ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            padding: const EdgeInsets.symmetric(vertical: 24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -262,7 +184,6 @@ class _PersonalInfomationPageState extends State<PersonalInfomationPage> {
 
   Widget buildName(User user) => Column(
         mainAxisAlignment: MainAxisAlignment.start,
-        //crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             user.username!,

@@ -114,7 +114,6 @@ class _LoginPageState extends State<LoginPage> {
                     );
                   } else {
                     if (usernameController.text == '' || passwordController.text == '') {
-                      //alertDialog.presentWarningDialog(context, 'Không được để trống\nusername hoặc mật khẩu!');
                       CustomToast.presentWarningToast(context,'Không được để trống\nusername hoặc mật khẩu!');
                     } else {
                       CustomLoading.loadingtext(context, 'Đang đăng nhập');

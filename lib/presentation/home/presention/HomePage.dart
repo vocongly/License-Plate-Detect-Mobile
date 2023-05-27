@@ -13,6 +13,7 @@ import 'package:license_plate_detect/presentation/personalinfomation/presention/
 import 'package:license_plate_detect/presentation/registervehicle/presention/register_moto_page.dart';
 import 'package:license_plate_detect/presentation/settings/presention/SettingsPage.dart';
 import 'package:license_plate_detect/services/api/app_api.dart';
+import 'package:license_plate_detect/ultis/snackbar/snackbar_controller.dart';
 import '../../../core/component/build_button.dart';
 import '../../../services/localstorage/localStorage.dart';
 import 'package:license_plate_detect/ultis/checkInternet/checkInternet.dart';
@@ -127,7 +128,11 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 AvatarandInform(
                   imagePath: userLocal.avatar,
-                  onClicked: () {
+                  onClickedBell: () {
+                    SnackBarController().show(
+                        context: context, content: "Tính năng đang phát triển");
+                  },
+                  onClickedAvata: () {
                     Navigator.pushReplacement(context,
                         MaterialPageRoute(builder: (context) {
                       return const PersonalInfomationPage();

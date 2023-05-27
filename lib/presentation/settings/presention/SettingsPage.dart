@@ -1,15 +1,13 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:license_plate_detect/core/component/build_button.dart';
-import 'package:license_plate_detect/core/theme/app_data.dart';
-
-import '../../../core/theme/app_color.dart';
-import '../../home/presention/HomePage.dart';
-import '../../../services/auth/auth.dart';
-import '../../login/presention/LoginPage.dart';
-import '../../personalinfomation/presention/PersonalInfomationPage.dart';
-import '../widgets/button_setting.dart';
+import 'package:license_plate_detect/core/theme/app_color.dart';
+import 'package:license_plate_detect/presentation/home/presention/HomePage.dart';
+import 'package:license_plate_detect/presentation/login/presention/LoginPage.dart';
+import 'package:license_plate_detect/presentation/personalinfomation/presention/PersonalInfomationPage.dart';
+import 'package:license_plate_detect/presentation/settings/widgets/button_setting.dart';
+import 'package:license_plate_detect/services/auth/auth.dart';
+import 'package:license_plate_detect/ultis/snackbar/snackbar_controller.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -42,16 +40,6 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: Text(
-            "Cài đặt",
-            textAlign: TextAlign.start,
-            style: Theme.of(context).textTheme.headlineMedium!,
-          ),
-        backgroundColor: Colors.transparent,
-        leadingWidth: 0,
-        elevation: 0,
-      ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -73,25 +61,16 @@ class _SettingsPageState extends State<SettingsPage> {
         onTap: _onItemTapped,
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal:24),
+        padding: EdgeInsets.symmetric(horizontal: 24,vertical: 24),
         child: ListView(
-          // mainAxisAlignment: MainAxisAlignment.start,
-          // crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Text(
-            //   'Cài đặt',
-            //   style: Theme.of(context).textTheme.headlineMedium,
-            // ),
-            // SizedBox(
-            //   height: 12,
-            // ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'Chung',
                   style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: AppColor.primaryColor),
                 ),
@@ -102,14 +81,16 @@ class _SettingsPageState extends State<SettingsPage> {
                   icon: Icons.language_outlined,
                   title: 'Ngôn ngữ',
                   onClicked: () {
-                    print('logout');
+                    SnackBarController().show(
+                        content: "Tính năng đang phát triển", context: context);
                   },
                 ),
                 buttonSetting(
                   icon: Icons.light_mode,
                   title: 'Chế độ sáng/tối',
                   onClicked: () {
-                    print('logout');
+                    SnackBarController().show(
+                        content: "Tính năng đang phát triển", context: context);
                   },
                 ),
                 buttonSetting(
@@ -127,7 +108,8 @@ class _SettingsPageState extends State<SettingsPage> {
                   icon: Icons.delete_outline,
                   title: 'Xóa tài khoản',
                   onClicked: () {
-                    print('logout');
+                    SnackBarController().show(
+                        content: "Tính năng đang phát triển", context: context);
                   },
                 ),
               ],
@@ -141,7 +123,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 Text(
                   'Phản hồi',
                   style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: AppColor.primaryColor),
                 ),
@@ -152,14 +134,16 @@ class _SettingsPageState extends State<SettingsPage> {
                   icon: Icons.warning_amber_outlined,
                   title: 'Báo cáo lỗi',
                   onClicked: () {
-                    print('logout');
+                    SnackBarController().show(
+                        content: "Tính năng đang phát triển", context: context);
                   },
                 ),
                 buttonSetting(
                   icon: Icons.feedback_outlined,
                   title: 'Gửi phản hồi',
                   onClicked: () {
-                    print('logout');
+                    SnackBarController().show(
+                        content: "Tính năng đang phát triển", context: context);
                   },
                 ),
               ],
