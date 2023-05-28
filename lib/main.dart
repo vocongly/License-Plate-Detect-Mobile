@@ -1,8 +1,12 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import '/core/theme/app_theme.dart';
-import 'presentation/login/presention/LoginPage.dart';
-import 'presentation/home/presention/HomePage.dart';
+import 'package:license_plate_detect/config/dependency/dependency_config.dart';
+import 'package:license_plate_detect/core/theme/app_theme.dart';
+import 'package:license_plate_detect/presentation/features/home/presention/HomePage.dart';
+import 'package:license_plate_detect/presentation/features/login/presention/LoginPage.dart';
+import 'package:license_plate_detect/presentation/features/notification/notification_page.dart';
 import 'services/auth/auth.dart';
 
 void main() async {
@@ -11,6 +15,8 @@ void main() async {
   var token = await Hive.openBox('token');
 
   var user = await Hive.openBox('user');
+
+  await configureDependencies();
 
   runApp(MyApp());
 }
@@ -28,7 +34,7 @@ class MyApp extends StatelessWidget {
         title: "License Plate Detect",
         theme: AppTheme.light,
         themeMode: ThemeMode.light,
-        //home: LoginPage());
+        // home: const NotificationPage());
         home: FutureBuilder(
           future: _auth.checkLogin(),
           builder: ((context, snapshot) {
@@ -43,6 +49,5 @@ class MyApp extends StatelessWidget {
             return const CircularProgressIndicator();
           }),
         ));
-        //home: RegisterVehiclePage());
   }
 }

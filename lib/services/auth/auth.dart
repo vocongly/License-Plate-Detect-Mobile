@@ -1,18 +1,11 @@
 // ignore_for_file: unrelated_type_equality_checks
 
-import 'dart:ffi';
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:license_plate_detect/core/models/Token.dart';
 import 'package:license_plate_detect/core/models/checkAndDetail.dart';
-import 'package:license_plate_detect/presentation/home/presention/HomePage.dart';
 import 'package:license_plate_detect/services/api/app_api.dart';
 import 'package:license_plate_detect/services/localstorage/localStorage.dart';
-import 'package:license_plate_detect/ultis/dialog/alertDialog.dart';
 
-import '../../core/models/User.dart';
 
 class Authenticate {
   Future<bool> checkLogin() async {

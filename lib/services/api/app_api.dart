@@ -6,12 +6,14 @@ import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:license_plate_detect/core/models/Region.dart';
+import 'package:license_plate_detect/core/models/notification_vehicle.dart';
 import 'package:license_plate_detect/core/models/vehicle.dart';
 
 import 'package:license_plate_detect/core/models/PlateInfo.dart';
 import 'package:license_plate_detect/core/models/Token.dart';
 import 'package:license_plate_detect/core/models/checkAndDetail.dart';
 import 'package:license_plate_detect/services/localstorage/localStorage.dart';
+import 'package:license_plate_detect/ultis/helper/string_helper.dart';
 
 import '../../core/models/User.dart';
 import '../../core/models/vehicle_info.dart';
@@ -380,9 +382,36 @@ class AppAPI {
       },
     );
     if (response.statusCode == 200) {
-      var list = json.decode(utf8.decode(response.bodyBytes))['list'] as List<dynamic>;
-      List<VehicleInfo> vehicles =list.map((e) => VehicleInfo.fromJson(e)).toList();
+      var list =
+          json.decode(utf8.decode(response.bodyBytes))['list'] as List<dynamic>;
+      List<VehicleInfo> vehicles =
+          list.map((e) => VehicleInfo.fromJson(e)).toList();
       return vehicles;
+    } else {
+      throw Exception('Failed to create album.');
+    }
+  }
+
+  static Future<List<NotificationVehicle>> notificationByUser() async {
+    Token token = LocalStorage.getToken();
+    final startDate = StringHelper.mapDatetoString(
+        date: DateTime.now().subtract(const Duration(days: 30)));
+    final endDate = StringHelper.mapDatetoString(date: DateTime.now());
+    final date = {"start_date": startDate, "end_date": endDate};
+    final response = await http.post(
+        Uri.parse(AppData.urlAPI +
+            '/api/v1/license-plate-app/in_and_out/get_detail_in_and_out_for_user?page=0&limit=50'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ${token.accessToken}'
+        },
+        body: jsonEncode({"date": date}));
+    if (response.statusCode == 200) {
+      final list = json.decode(utf8.decode(response.bodyBytes))["list"] as List;
+      List<NotificationVehicle> notifications =
+          list.map((e) => NotificationVehicle.fromJson(e)).toList();
+      notifications.sort((a,b)=> a.date.compareTo(b.date));
+      return notifications.reversed.toList();
     } else {
       throw Exception('Failed to create album.');
     }

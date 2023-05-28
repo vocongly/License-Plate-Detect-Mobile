@@ -20,6 +20,11 @@ dependencies:
   connectivity_plus: ^2.3.9
   internet_connection_checker: ^1.0.0+1
   image_picker: ^0.8.6
+  intl: ^0.18.1
+
+  get_it: ^7.2.0
+  flutter_bloc: ^8.1.1
+  bloc: ^8.1.0
 
 dev_dependencies:
   flutter_test:
