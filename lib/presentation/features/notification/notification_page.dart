@@ -6,6 +6,7 @@ import 'package:license_plate_detect/core/models/notification_vehicle.dart';
 import 'package:license_plate_detect/core/theme/app_color.dart';
 import 'package:license_plate_detect/presentation/features/home/presention/HomePage.dart';
 import 'package:license_plate_detect/presentation/features/notification/bloc/notification/notification_cubit.dart';
+import 'package:license_plate_detect/presentation/features/notification/notification_detail_page.dart';
 import 'package:license_plate_detect/presentation/features/notification/widget/notification_item.dart';
 import 'package:license_plate_detect/ultis/helper/string_helper.dart';
 
@@ -119,7 +120,18 @@ class ListNotification extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final time = notification.times[index];
                   return NotificationItem(
-                      notification: notification, time: time);
+                    notification: notification,
+                    time: time,
+                    onClicked: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return NotificationDetailPage(
+                          notification: notification,
+                          time: time,
+                        );
+                      }));
+                    },
+                  );
                 }),
           )
         ],
